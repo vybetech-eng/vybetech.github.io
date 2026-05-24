@@ -52,14 +52,14 @@ nav.sc{padding:.9rem 5rem}
 .nav-btn:hover{background:var(--vybe2);box-shadow:0 0 30px rgba(124,92,252,.5);transform:translateY(-1px)}
 
 /* HERO */
-#hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;overflow:hidden}
+#hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;overflow:visible}
 #c3d{position:absolute;inset:0;z-index:1}
 .h-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(124,92,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
 .hero-inner{position:relative;z-index:2;padding:0 5rem;max-width:760px}
 .h-badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--vybe2);background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.25);padding:.38rem 1rem;border-radius:100px;margin-bottom:2rem}
 .h-badge-dot{width:5px;height:5px;background:var(--vybe);border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5.5vw,5rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:1.5rem}
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:1.5rem}
 h1 em{font-style:normal;background:linear-gradient(90deg,var(--vybe2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .h-sub{font-size:1rem;line-height:1.75;color:var(--muted);max-width:520px;margin-bottom:2.5rem;font-weight:300}
 .h-btns{display:flex;gap:1rem;flex-wrap:wrap}
@@ -72,7 +72,7 @@ h1 em{font-style:normal;background:linear-gradient(90deg,var(--vybe2),var(--cyan
 .hstat .l{font-size:.7rem;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
 
 /* MARQUEE */
-.mq-wrap{padding:1.2rem 0;background:var(--bg2);overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.mq-wrap{padding:1.2rem 0;background:var(--bg2);overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:10;margin-top:0}
 .mq-track{display:flex;gap:3rem;animation:mq 30s linear infinite;white-space:nowrap}
 .mq-item{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);display:flex;align-items:center;gap:1rem;flex-shrink:0}
 .mq-item .d{width:4px;height:4px;background:var(--vybe);border-radius:50%;flex-shrink:0}
@@ -584,7 +584,7 @@ footer{background:#030308;padding:2.5rem 5rem;display:flex;align-items:center;ju
     </div>
     <div class="tc rv d1">
       <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"The SEO articles Aditya wrote are ranking page 1 within two months. Research quality and writing style is genuinely impressive — not the typical AI-generated fluff you see everywhere."</p>
+      <p class="tc-txt">"The SEO articles Vybe.tech wrote are ranking page 1 within two months. Research quality and writing style is genuinely impressive — not the typical AI-generated fluff you see everywhere."</p>
       <div class="tc-bot"><div class="tc-av" style="background:#1a5e32">MK</div><div><div class="tc-name">Manish Kumar</div><div class="tc-role">Director, MK Engineering Solutions</div></div></div>
     </div>
     <div class="tc rv d2">
@@ -594,7 +594,7 @@ footer{background:#030308;padding:2.5rem 5rem;display:flex;align-items:center;ju
     </div>
     <div class="tc rv">
       <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"The Instagram DM automation is a game-changer. We ran one reel, told people to comment 'COURSE' and 140 leads came in automatically overnight. Aditya set it up in one afternoon."</p>
+      <p class="tc-txt">"The Instagram DM automation is a game-changer. We ran one reel, told people to comment 'COURSE' and 140 leads came in automatically overnight. Vybe.tech set it up in one afternoon."</p>
       <div class="tc-bot"><div class="tc-av" style="background:#1a3a6b">PV</div><div><div class="tc-name">Priya Verma</div><div class="tc-role">Founder, Achievers Coaching Centre</div></div></div>
     </div>
     <div class="tc rv d1">
@@ -680,7 +680,7 @@ footer{background:#030308;padding:2.5rem 5rem;display:flex;align-items:center;ju
   <div class="chat-wrap">
     <div class="stag" style="text-align:center">AI Assistant</div>
     <h2 class="stitle" style="text-align:center;font-size:1.6rem">Chat With Our AI — Right Here</h2>
-    <p class="ssub" style="text-align:center;margin:0 auto 2rem;max-width:480px">Tell us what you need. Our AI assistant will help you figure out which service fits best and connect you to Aditya instantly.</p>
+    <p class="ssub" style="text-align:center;margin:0 auto 2rem;max-width:480px">Tell us what you need. Our AI assistant will help you figure out which service fits best and connect you to Vybe.tech instantly.</p>
     <div class="chat-box">
       <div class="chat-header">
         <div class="chat-av">🤖</div>
@@ -810,12 +810,12 @@ rvEls.forEach(el=>obs.observe(el));
 
 // AI CHATBOT
 const botReplies={
-  'website':["Great choice! We build 3D, interactive websites for any business — clinics, engineers, manufacturers, restaurants, you name it.\n\nStarter Pack starts at ₹10,000 (up to 3 pages) and Growth Pack is ₹24,000 (up to 8 pages + SEO articles). Want me to connect you to Aditya directly?","We've built websites for doctors, coaching institutes, manufacturers, and restaurants. All mobile-first, SEO-ready, and delivered fast. Should I send you a WhatsApp link to Aditya?"],
+  'website':["Great choice! We build 3D, interactive websites for any business — clinics, engineers, manufacturers, restaurants, you name it.\n\nStarter Pack starts at ₹10,000 (up to 3 pages) and Growth Pack is ₹24,000 (up to 8 pages + SEO articles). Want me to connect you to Vybe.tech directly?","We've built websites for doctors, coaching institutes, manufacturers, and restaurants. All mobile-first, SEO-ready, and delivered fast. Should I send you a WhatsApp link to Vybe.tech?"],
   'seo':["Excellent! We write research-backed SEO articles that actually rank on Google. Geopolitics, AI, tech, business, health — any niche.\n\nYou can read samples at medium.com/@reachtowordknight. Pricing starts at ₹1,500 per article. Want to get started?","SEO content is our speciality — we build topic clusters with internal linking strategies that compound over time. One article leads to another ranking, and so on. Want a free consultation?"],
   'automation':["This is where we really shine! 🚀 We build WhatsApp automation, lead generation funnels, AI chatbots, missed-call text back systems, Instagram DM automation, automated client onboarding, CRM pipelines, and Google review automation.\n\nWhich of these sounds most useful for your business right now?","Automation saves our clients 10–20 hours a week. The missed-call text back alone has recovered 10+ leads per week for a Delhi clinic. Want a custom quote?"],
   'pricing':["Here's the quick overview:\n\n• Starter Pack — ₹10,000 (up to 3 pages, mobile responsive, basic SEO, 1 month support)\n• Growth Pack — ₹24,000 (up to 8 pages, 2 SEO articles, automation help, 3 months support)\n• Automation Pack — Custom quote based on your workflows\n\nAll include a free discovery call. Which fits you best?"],
-  'delivery':["Fast! Most websites are live within 5–7 business days. SEO articles within 48–72 hours. Automation setups take 3–10 days depending on complexity.\n\nWant to book a quick call with Aditya to discuss your project timeline?"],
-  'default':["Thanks for your message! I'm the Vybe.tech AI assistant. I can tell you about our website development, SEO content writing, and business automation services.\n\nOr you can reach Aditya directly on WhatsApp: +91 85100 84896 — he typically responds within minutes!","Great question! The best next step is a quick discovery call with Aditya — it's free, zero pressure, and helps us understand exactly what you need.\n\nJust tap the WhatsApp button below or click here: wa.me/918510084896"]
+  'delivery':["Fast! Most websites are live within 5–7 business days. SEO articles within 48–72 hours. Automation setups take 3–10 days depending on complexity.\n\nWant to book a quick call with Vybe.tech to discuss your project timeline?"],
+  'default':["Thanks for your message! I'm the Vybe.tech AI assistant. I can tell you about our website development, SEO content writing, and business automation services.\n\nOr you can reach Vybe.tech directly on WhatsApp: +91 85100 84896 — he typically responds within minutes!","Great question! The best next step is a quick discovery call with Vybe.tech — it's free, zero pressure, and helps us understand exactly what you need.\n\nJust tap the WhatsApp button below or click here: wa.me/918510084896"]
 };
 
 const msgs=document.getElementById('chat-msgs');
