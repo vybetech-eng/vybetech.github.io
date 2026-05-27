@@ -1,866 +1,792 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Vybe.tech — High-converting 3D websites, SEO content, and zero-touch business automation for clinics, engineers, and modern brands. Pan India & Global.">
-<meta name="keywords" content="3D website design India, business automation, WhatsApp automation, SEO content writing, web design Delhi, lead generation, AI chatbot, CRM automation, digital marketing India, vybe tech">
-<meta name="author" content="Vybe.tech">
-<meta property="og:title" content="Vybe.tech — Websites. Content. Automation.">
-<meta property="og:description" content="We build your digital ecosystem. You run your business. 3D websites, SEO content & zero-touch automation — Pan India & Global.">
-<meta property="og:type" content="website">
-<title>Vybe.tech — We Build Your Digital Ecosystem</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#06060e;
-  --bg2:#0d0d1a;
-  --bg3:#111122;
-  --surface:rgba(255,255,255,0.04);
-  --surface2:rgba(255,255,255,0.07);
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.14);
-  --text:#f0eee8;
-  --muted:rgba(240,238,232,0.45);
-  --muted2:rgba(240,238,232,0.25);
-  --vybe:#7c5cfc;
-  --vybe2:#a78bfa;
-  --vybe3:#c4b5fd;
-  --cyan:#22d3ee;
-  --green:#4ade80;
-  --radius:14px;
-  --radius2:20px;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
+import { useState, useEffect, useRef } from "react";
 
-/* CURSOR */
-#cur{position:fixed;width:10px;height:10px;background:var(--vybe2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-#cur-r{position:fixed;width:32px;height:32px;border:1px solid rgba(124,92,252,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .14s ease}
+// ─── WRITING SPECIMENS ────────────────────────────────────────────────────────
+const specimens = [
+  {
+    label: "500 Words",
+    wordCount: "~500 words",
+    tag: "AI & Technology",
+    title: "Why AI Will Not Replace Writers — It Will Expose the Bad Ones",
+    readTime: "3 min read",
+    body: `Every few months, a wave of panic rolls through the content industry. "AI is coming for writers." Editors share screenshots of GPT-generated paragraphs that are, admittedly, coherent. LinkedIn fills up with hot takes. And then, quietly, nothing changes — at least not the way the panic predicted.
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5rem;backdrop-filter:blur(24px) saturate(160%);background:rgba(6,6,14,.7);border-bottom:1px solid var(--border);transition:padding .3s}
-nav.sc{padding:.9rem 5rem}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:6px}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--vybe);box-shadow:0 0 12px var(--vybe)}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.nav-btn{background:var(--vybe);color:#fff;padding:.55rem 1.4rem;border-radius:100px;font-size:.8rem;font-weight:500;text-decoration:none;transition:all .2s;letter-spacing:.02em;box-shadow:0 0 20px rgba(124,92,252,.3)}
-.nav-btn:hover{background:var(--vybe2);box-shadow:0 0 30px rgba(124,92,252,.5);transform:translateY(-1px)}
+Here is what is actually happening.
 
-/* HERO */
-#hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;overflow:visible}
-#c3d{position:absolute;inset:0;z-index:1}
-.h-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(124,92,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
-.hero-inner{position:relative;z-index:2;padding:0 5rem;max-width:760px}
-.h-badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--vybe2);background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.25);padding:.38rem 1rem;border-radius:100px;margin-bottom:2rem}
-.h-badge-dot{width:5px;height:5px;background:var(--vybe);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:1.5rem}
-h1 em{font-style:normal;background:linear-gradient(90deg,var(--vybe2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.h-sub{font-size:1rem;line-height:1.75;color:var(--muted);max-width:520px;margin-bottom:2.5rem;font-weight:300}
-.h-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-p{background:var(--vybe);color:#fff;padding:.85rem 2rem;border-radius:100px;font-size:.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .25s;box-shadow:0 0 30px rgba(124,92,252,.35)}
-.btn-p:hover{background:var(--vybe2);transform:translateY(-2px);box-shadow:0 0 50px rgba(124,92,252,.5)}
-.btn-s{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:100px;font-size:.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border2);transition:all .25s}
-.btn-s:hover{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.08);transform:translateY(-2px)}
-.h-stats{position:absolute;bottom:3rem;right:5rem;z-index:2;display:flex;gap:2.5rem}
-.hstat .n{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;line-height:1;background:linear-gradient(90deg,var(--vybe2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hstat .l{font-size:.7rem;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+AI has not killed writing. It has killed the kind of writing that should have died years ago. The 400-word SEO filler article stuffed with keywords and zero insight? Gone. The boilerplate product description copy-pasted across a hundred SKUs? Automated. The listicle that regurgitates what every other listicle already said? Irrelevant.
 
-/* MARQUEE */
-.mq-wrap{padding:1.2rem 0;background:var(--bg2);overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:10;margin-top:0}
-.mq-track{display:flex;gap:3rem;animation:mq 30s linear infinite;white-space:nowrap}
-.mq-item{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);display:flex;align-items:center;gap:1rem;flex-shrink:0}
-.mq-item .d{width:4px;height:4px;background:var(--vybe);border-radius:50%;flex-shrink:0}
-@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+What remains — what AI cannot replicate without sounding like a very confident impersonator — is voice, lived experience, and the specific texture of a human perspective on a specific thing at a specific moment in time.
 
-/* SECTIONS */
-section{padding:7rem 5rem}
-.stag{font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--vybe2);margin-bottom:1rem}
-.stitle{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:1.2rem}
-.ssub{font-size:.95rem;color:var(--muted);line-height:1.75;max-width:540px;font-weight:300}
+Consider what a journalist does when covering a factory fire in Kanpur. She is not simply summarising facts available from a wire service. She is standing in the ash, talking to the worker who lost two fingers, noting the way the foreman looks away when asked about fire exits. AI can write a serviceable news summary. It cannot write that story.
 
-/* SERVICES */
-#services{background:var(--bg)}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;margin-top:4rem;background:var(--border);border-radius:var(--radius2);overflow:hidden}
-.svc-card{background:var(--bg2);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:background .3s}
-.svc-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,92,252,.12),transparent);opacity:0;transition:opacity .4s}
-.svc-card:hover{background:var(--bg3)}
-.svc-card:hover::after{opacity:1}
-.svc-card:hover .svc-num{color:var(--vybe2)}
-.svc-icon{width:52px;height:52px;border-radius:14px;background:rgba(124,92,252,.12);border:1px solid rgba(124,92,252,.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.8rem;transition:all .3s}
-.svc-card:hover .svc-icon{background:rgba(124,92,252,.2);border-color:rgba(124,92,252,.4);box-shadow:0 0 24px rgba(124,92,252,.25)}
-.svc-num{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);margin-bottom:1.5rem;transition:color .3s}
-.svc-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:.9rem}
-.svc-desc{font-size:.87rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-weight:300}
-.svc-list{list-style:none;margin-bottom:2rem}
-.svc-list li{font-size:.8rem;color:var(--muted);padding:.32rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.svc-list li::before{content:'→';color:var(--vybe2);flex-shrink:0}
-.svc-price{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--vybe2);background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.2);padding:.3rem .9rem;border-radius:100px;display:inline-block}
+Or consider the geopolitical analyst who has spent fifteen years reading Mandarin-language policy documents, who understands not just what the statement says but what was conspicuously left unsaid. AI can produce plausible analysis. It cannot produce earned analysis.
 
-/* SEO WRITING INTERACTIVE HOVER */
-.writing-demo{margin-top:1.5rem;border:1px solid var(--border2);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.02)}
-.wd-tabs{display:flex;border-bottom:1px solid var(--border)}
-.wd-tab{flex:1;padding:.6rem;font-size:.72rem;font-weight:500;text-align:center;cursor:pointer;color:var(--muted);transition:all .2s;letter-spacing:.04em}
-.wd-tab.active{color:var(--vybe2);background:rgba(124,92,252,.08)}
-.wd-content{padding:1rem;font-size:.8rem;line-height:1.7;color:var(--muted);display:none}
-.wd-content.show{display:block}
-.wd-link{display:inline-flex;align-items:center;gap:6px;margin-top:.8rem;font-size:.78rem;color:var(--vybe2);text-decoration:none;font-weight:500;transition:gap .2s}
-.wd-link:hover{gap:10px}
+The writers who are struggling right now are the ones whose value proposition was volume and speed — two things AI does better, cheaper, and without complaining. That was always a fragile position to be in.
 
-/* AUTOMATION */
-#automation{background:var(--bg2)}
-#automation .stitle{color:var(--text)}
-.auto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:3.5rem}
-.ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:all .3s;position:relative;overflow:hidden}
-.ac::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;height:2px;background:linear-gradient(90deg,var(--vybe),var(--cyan));opacity:0;transition:opacity .3s}
-.ac:hover{border-color:rgba(124,92,252,.3);background:var(--surface2);transform:translateY(-4px)}
-.ac:hover::before{opacity:1}
-.ac-icon{font-size:1.6rem;margin-bottom:1rem}
-.ac-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.5rem}
-.ac-what{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vybe2);margin-bottom:.6rem}
-.ac-desc{font-size:.82rem;color:var(--muted);line-height:1.65;font-weight:300}
-.ac-tag{display:inline-block;margin-top:.9rem;font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.15);padding:.22rem .7rem;border-radius:100px}
+The writers who are thriving are those whose work is defined by specificity: specific beats, specific sources, specific aesthetic sensibilities that readers actually seek out by name. They are not interchangeable. They are not summarisable. They are, in the truest sense of the word, irreplaceable.
 
-/* CLIENTS */
-#clients{background:var(--bg)}
-.cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-top:2.5rem}
-.cl-pill{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;display:flex;align-items:center;gap:10px;transition:all .25s;cursor:default}
-.cl-pill:hover{border-color:rgba(124,92,252,.3);background:var(--surface2);transform:translateY(-2px)}
-.cl-e{font-size:1.3rem}
-.cl-n{font-size:.82rem;font-weight:400;color:var(--muted)}
+This does not mean writers should ignore AI. The smartest practitioners are using it the way a carpenter uses a table saw — to handle the mechanical parts faster, freeing time for the craft parts that actually matter.
 
-/* PORTFOLIO */
-#portfolio{background:var(--bg2)}
-.port-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
-.pc{border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden;transition:all .3s;background:var(--bg3)}
-.pc:hover{transform:translateY(-6px);border-color:rgba(124,92,252,.3);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.pc-top{height:180px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
-.pc-top-1{background:linear-gradient(135deg,#1a0a3a,#3a1a7a)}
-.pc-top-2{background:linear-gradient(135deg,#0a2a1a,#1a5e3a)}
-.pc-top-3{background:linear-gradient(135deg,#1a0a2a,#5a1060)}
-.pc-top::after{content:attr(data-l);position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);color:rgba(255,255,255,.7);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.4rem 1rem;backdrop-filter:blur(4px);font-family:'Inter',sans-serif}
-.pc-body{padding:1.5rem}
-.pc-tag{font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--vybe2);margin-bottom:.4rem}
-.pc-title{font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.5rem}
-.pc-desc{font-size:.82rem;color:var(--muted);line-height:1.65;font-weight:300}
-.pc-a{display:inline-flex;align-items:center;gap:6px;margin-top:1rem;font-size:.8rem;font-weight:500;color:var(--vybe2);text-decoration:none;transition:gap .2s}
-.pc-a:hover{gap:10px}
+The bar for acceptable writing has not lowered. It has bifurcated. Commodity content is now effectively free. Everything above commodity now needs to justify why a human wrote it, and that justification needs to be visible on the page — in the argument, the angle, the sentence that no algorithm would have constructed.
 
-/* PROCESS */
-#process{background:var(--bg)}
-.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3.5rem;position:relative}
-.proc::before{content:'';position:absolute;top:20px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--vybe),transparent)}
-.step{text-align:center;padding:0 1.5rem;position:relative;z-index:1}
-.step-n{width:40px;height:40px;border-radius:50%;background:var(--vybe);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;color:#fff;box-shadow:0 0 20px rgba(124,92,252,.4)}
-.step-t{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.5rem}
-.step-d{font-size:.8rem;color:var(--muted);line-height:1.6;font-weight:300}
+If you can articulate clearly why your writing could not have been produced by a machine, you have a career. If you cannot, you have a problem worth solving urgently.`
+  },
+  {
+    label: "1000 Words",
+    wordCount: "~1000 words",
+    tag: "Geopolitics",
+    title: "India's Strategic Posture After Operation Sindoor: Doctrine, Deterrence and the New Red Lines",
+    readTime: "6 min read",
+    body: `In the weeks following Operation Sindoor, the most significant shift in Indian strategic posture since the Kargil conflict, analysts have focused primarily on the tactical and kinetic dimensions of what transpired. The precision strikes, the carefully calibrated escalation ladder, the demonstrable intelligence superiority — these are the elements that fill newspaper columns and think-tank briefs. What has received less attention, but arguably matters more for the decade ahead, is what the operation signals about India's willingness to revise the unspoken rules that had governed South Asian deterrence since 1998.
 
-/* TESTIMONIALS */
-#testimonials{background:var(--bg2)}
-.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:3rem}
-.tc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;transition:all .3s}
-.tc:hover{transform:translateY(-4px);border-color:rgba(124,92,252,.25)}
-.tc.feat{background:linear-gradient(135deg,rgba(124,92,252,.15),rgba(34,211,238,.07));border-color:rgba(124,92,252,.3)}
-.tc-stars{color:#f0c040;font-size:.85rem;letter-spacing:2px;margin-bottom:.8rem}
-.tc-txt{font-size:.87rem;line-height:1.7;color:var(--muted);margin-bottom:1.2rem;font-style:italic;font-weight:300}
-.tc-bot{display:flex;align-items:center;gap:10px}
-.tc-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0}
-.tc-name{font-weight:500;font-size:.85rem}
-.tc-role{font-size:.72rem;color:var(--muted2)}
-.rating-bar-section{display:flex;align-items:center;gap:3rem;margin-top:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:2rem 2.5rem;flex-wrap:wrap}
-.rb-big .rbn{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;background:linear-gradient(90deg,var(--vybe2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.rb-big .rbs{color:#f0c040;margin:.3rem 0;font-size:.9rem}
-.rb-big .rbc{font-size:.75rem;color:var(--muted2)}
-.rb-bars{flex:1;min-width:180px}
-.rb-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.rb-l{font-size:.7rem;color:var(--muted2);width:28px;text-align:right}
-.rb-tr{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden}
-.rb-f{height:100%;background:linear-gradient(90deg,var(--vybe),var(--cyan));border-radius:100px}
+**The Old Framework and Its Erosion**
 
-/* PRICING */
-#pricing{background:var(--bg)}
-.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
-.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius2);padding:2.5rem;transition:all .3s}
-.pcard:hover:not(.pop){transform:translateY(-5px);border-color:rgba(124,92,252,.3)}
-.pcard.pop{background:linear-gradient(145deg,rgba(124,92,252,.2),rgba(34,211,238,.08));border:1px solid rgba(124,92,252,.4);transform:scale(1.03)}
-.p-badge{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vybe2);background:rgba(124,92,252,.12);border:1px solid rgba(124,92,252,.2);padding:.28rem .8rem;border-radius:100px;display:inline-block;margin-bottom:1.2rem}
-.p-badge.hot{color:var(--cyan);background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.2)}
-.p-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin-bottom:.8rem}
-.p-amt{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;margin:.8rem 0 .2rem}
-.p-per{font-size:.78rem;color:var(--muted2)}
-.p-desc{font-size:.83rem;color:var(--muted);line-height:1.65;margin:1rem 0 1.3rem;padding-top:1rem;border-top:1px solid var(--border);font-weight:300}
-.p-feats{list-style:none;margin-bottom:1.8rem}
-.p-feat{font-size:.8rem;color:var(--muted);padding:.35rem 0;display:flex;align-items:center;gap:8px}
-.p-feat::before{content:'✓';color:var(--vybe2);font-weight:700;flex-shrink:0}
-.btn-pcard{display:block;text-align:center;padding:.8rem;border-radius:100px;font-size:.85rem;font-weight:500;text-decoration:none;transition:all .25s}
-.btn-dark{background:var(--vybe);color:#fff;box-shadow:0 0 20px rgba(124,92,252,.25)}
-.btn-dark:hover{background:var(--vybe2);box-shadow:0 0 30px rgba(124,92,252,.45)}
-.btn-light{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
-.btn-light:hover{border-color:rgba(124,92,252,.4);background:rgba(124,92,252,.1)}
+For most of the post-Pokhran period, Indian strategic restraint was premised on a calculation that the costs of conventional escalation against a nuclear-armed Pakistan outweighed the gains of any punitive action. This calculation produced a doctrine of strategic restraint that critics characterised as paralysis dressed up as wisdom. The attacks of 2001, 2008, and the subsequent years of cross-border terrorism were absorbed, each time with the same result: strong words, international condemnation of Islamabad, and no kinetic response that crossed the Line of Control in any meaningful way.
 
-/* CTA */
-#cta{background:var(--bg2);padding:7rem 5rem;text-align:center;position:relative;overflow:hidden}
-#cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(ellipse,rgba(124,92,252,.12),transparent 70%);pointer-events:none}
-#cta h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:800;letter-spacing:-.025em;margin-bottom:1.2rem;position:relative}
-#cta p{font-size:.98rem;color:var(--muted);margin-bottom:2.5rem;line-height:1.7;font-weight:300;position:relative}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
-.btn-wa{background:#25d366;color:#fff;padding:.9rem 2rem;border-radius:100px;font-size:.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:all .25s;box-shadow:0 0 24px rgba(37,211,102,.25)}
-.btn-wa:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 0 40px rgba(37,211,102,.4)}
-.btn-ghost{background:transparent;color:var(--text);padding:.9rem 2rem;border-radius:100px;font-size:.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--border2);transition:all .25s}
-.btn-ghost:hover{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.08);transform:translateY(-2px)}
+Operation Sindoor has effectively retired that framework. Not loudly, not with a formal doctrinal announcement, but through demonstrated action. The operation's architects understood that the most durable strategic message is not one that is declared but one that is proven.
 
-/* AI CHATBOT FOOTER */
-#chat-section{background:var(--bg);padding:5rem;border-top:1px solid var(--border)}
-.chat-wrap{max-width:700px;margin:0 auto}
-.chat-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden}
-.chat-header{background:linear-gradient(90deg,rgba(124,92,252,.2),rgba(34,211,238,.08));padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.chat-av{width:36px;height:36px;border-radius:50%;background:var(--vybe);display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 0 16px rgba(124,92,252,.4)}
-.chat-hname{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
-.chat-hstatus{font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:5px}
-.chat-hstatus::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green)}
-.chat-msgs{height:300px;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:.8rem}
-.chat-msgs::-webkit-scrollbar{width:4px}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.msg{max-width:80%;padding:.7rem 1rem;border-radius:12px;font-size:.84rem;line-height:1.6;animation:msgIn .3s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.msg.bot{background:var(--surface2);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:4px 12px 12px 12px}
-.msg.user{background:var(--vybe);color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px}
-.msg.typing{color:var(--muted2)}
-.chat-qs{display:flex;flex-wrap:wrap;gap:.5rem;padding:.8rem 1.2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.cq{font-size:.75rem;background:var(--surface);border:1px solid var(--border2);color:var(--muted);padding:.38rem .85rem;border-radius:100px;cursor:pointer;transition:all .2s}
-.cq:hover{border-color:rgba(124,92,252,.4);color:var(--vybe2);background:rgba(124,92,252,.08)}
-.chat-input-row{display:flex;gap:.5rem;padding:.8rem 1rem}
-.chat-input{flex:1;background:var(--surface);border:1px solid var(--border2);border-radius:100px;padding:.55rem 1rem;font-size:.83rem;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
-.chat-input:focus{border-color:rgba(124,92,252,.5)}
-.chat-input::placeholder{color:var(--muted2)}
-.chat-send{background:var(--vybe);color:#fff;border:none;border-radius:100px;padding:.55rem 1.2rem;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
-.chat-send:hover{background:var(--vybe2)}
+**What the Operation Actually Demonstrated**
 
-/* FOOTER */
-footer{background:#030308;padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;border-top:1px solid rgba(255,255,255,.04)}
-.fl{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);display:flex;align-items:center;gap:6px}
-.fl-d{width:7px;height:7px;border-radius:50%;background:var(--vybe);box-shadow:0 0 10px var(--vybe)}
-.flinks{display:flex;gap:2rem;list-style:none}
-.flinks a{font-size:.75rem;color:var(--muted2);text-decoration:none;transition:color .2s}
-.flinks a:hover{color:var(--text)}
-.fcopy{font-size:.72rem;color:rgba(255,255,255,.15)}
+Three elements of the operation deserve particular attention from a doctrine standpoint. First, the targeting calculus. The strikes were calibrated to maximise psychological impact on the Pakistani military-terror nexus while maintaining sufficient ambiguity to allow both sides a face-saving off-ramp. This is not accidental — it reflects a mature understanding that compellence is more useful than punishment when the goal is behavioural change rather than annihilation.
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.16,1,.3,1)}
-.rv.vis{opacity:1;transform:translateY(0)}
-.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+Second, the information environment. India's communications strategy during and after the operation was notably disciplined compared to previous crises. This discipline served a dual purpose: it denied Pakistan a propaganda narrative while simultaneously communicating resolve to domestic audiences without inflaming the situation to the point of forcing Islamabad's hand. Managing escalation dominance in the information domain is a capability that strategic planners often underrate until they need it.
 
-/* FLOAT WA */
-.wa-f{position:fixed;bottom:2rem;right:2rem;z-index:50;background:#25d366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,.35);animation:wapulse 3s ease infinite;transition:transform .2s}
-.wa-f:hover{transform:scale(1.1)}
-@keyframes wapulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.35)}50%{box-shadow:0 8px 48px rgba(37,211,102,.6)}}
+Third, the international response management. The speed with which New Delhi briefed key capitals — Washington, Moscow, Riyadh, Abu Dhabi — reflected lessons drawn from earlier crises where the information lag allowed third parties to shape the narrative before India could. The fact that the international community's initial response leaned more toward "de-escalate proportionally" than "India must stand down immediately" was not accidental. It was earned through pre-crisis diplomatic investment.
 
-@media(max-width:768px){
-  nav{padding:.9rem 1.5rem}
-  .nav-links{display:none}
-  section{padding:4rem 1.5rem}
-  .hero-inner{padding:0 1.5rem}
-  .h-stats{display:none}
-  .proc{grid-template-columns:1fr 1fr;gap:2rem}
-  .proc::before{display:none}
-  footer,.chat-box-outer{padding:2rem 1.5rem}
-  #chat-section{padding:3rem 1.5rem}
-  #cta{padding:4rem 1.5rem}
-}
-</style>
-</head>
-<body>
+**Pakistan's Strategic Dilemma**
 
-<div id="cur"></div>
-<div id="cur-r"></div>
-<a href="https://wa.me/918510084896" class="wa-f" target="_blank" rel="noopener">💬</a>
+For Islamabad, the operation has created a dilemma with no clean exit. The traditional deterrence model — threaten nuclear escalation to neutralise India's conventional superiority — has been stress-tested and found wanting. India's demonstrated willingness to absorb that threat calculus and proceed anyway suggests that Rawalpindi's nuclear bluff, or at minimum its deterrent threshold, has been recalibrated upward in Indian strategic thinking.
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo"><span class="logo-dot"></span>Vybe.tech</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#automation">Automation</a></li>
-    <li><a href="#portfolio">Work</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <a href="https://wa.me/918510084896" class="nav-btn" target="_blank">Book a Call →</a>
-</nav>
+This leaves Pakistan with a narrowing set of options. Doubling down on the asymmetric strategy — sustaining the infrastructure of non-state militant groups — becomes significantly more dangerous if India has now established that it will respond kinetically to attacks above a certain threshold, regardless of Pakistan's nuclear posture. Abandoning that strategy entirely would mean abandoning the primary lever through which Islamabad has sought to manage its strategic asymmetry with New Delhi.
 
-<!-- HERO -->
-<section id="hero">
-  <div class="h-grid"></div>
-  <canvas id="c3d"></canvas>
-  <div class="hero-inner">
-    <div class="h-badge"><span class="h-badge-dot"></span>Pan India &amp; Global · Est. 2023</div>
-    <h1>We build your<br><em>digital ecosystem.</em><br>You run your business.</h1>
-    <p class="h-sub">High-converting 3D websites, SEO content, and zero-touch automation for clinics, engineers, manufacturers, and modern brands.</p>
-    <div class="h-btns">
-      <a href="https://wa.me/918510084896" class="btn-p" target="_blank">💬 Book a Discovery Call</a>
-      <a href="#services" class="btn-s">Explore Services ↓</a>
-    </div>
-  </div>
-  <div class="h-stats">
-    <div class="hstat"><div class="n">50+</div><div class="l">Projects</div></div>
-    <div class="hstat"><div class="n">4.9★</div><div class="l">Avg Rating</div></div>
-    <div class="hstat"><div class="n">Global</div><div class="l">Reach</div></div>
-  </div>
-</section>
+The most likely outcome, at least in the near term, is a period of tactical recalibration in which Pakistan's security establishment attempts to identify the new red lines without provoking another strike. This is a delicate exercise, and history suggests it will not be managed cleanly.
 
-<!-- MARQUEE -->
-<div class="mq-wrap">
-  <div class="mq-track" id="mqt">
-    <span class="mq-item"><span class="d"></span>3D Web Design</span>
-    <span class="mq-item"><span class="d"></span>SEO Content Writing</span>
-    <span class="mq-item"><span class="d"></span>WhatsApp Automation</span>
-    <span class="mq-item"><span class="d"></span>Lead Generation</span>
-    <span class="mq-item"><span class="d"></span>AI Chatbots</span>
-    <span class="mq-item"><span class="d"></span>CRM Automation</span>
-    <span class="mq-item"><span class="d"></span>Missed-Call TextBack</span>
-    <span class="mq-item"><span class="d"></span>Client Onboarding</span>
-    <span class="mq-item"><span class="d"></span>Review Generation</span>
-    <span class="mq-item"><span class="d"></span>DM Automation</span>
-    <span class="mq-item"><span class="d"></span>3D Web Design</span>
-    <span class="mq-item"><span class="d"></span>SEO Content Writing</span>
-    <span class="mq-item"><span class="d"></span>WhatsApp Automation</span>
-    <span class="mq-item"><span class="d"></span>Lead Generation</span>
-    <span class="mq-item"><span class="d"></span>AI Chatbots</span>
-    <span class="mq-item"><span class="d"></span>CRM Automation</span>
-    <span class="mq-item"><span class="d"></span>Missed-Call TextBack</span>
-    <span class="mq-item"><span class="d"></span>Client Onboarding</span>
-    <span class="mq-item"><span class="d"></span>Review Generation</span>
-    <span class="mq-item"><span class="d"></span>DM Automation</span>
-  </div>
-</div>
+**India's New Deterrence Architecture**
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="stag">What We Do</div>
-  <h2 class="stitle">Three Pillars of<br>Digital Growth</h2>
-  <p class="ssub">Everything you need to dominate online — done right, delivered fast, priced fairly.</p>
+For New Delhi, the more pressing challenge is consolidating the deterrence gains without either overextending the logic or allowing it to atrophy through inaction. Deterrence is not a state — it is a continuous performance. The credibility established by Sindoor will decay if subsequent provocations are met with the old pattern of verbal response and diplomatic manoeuvre.
 
-  <div class="svc-grid" style="margin-top:3.5rem">
-    <!-- WEB -->
-    <div class="svc-card rv">
-      <div class="svc-num">01 · Immersive Web Design</div>
-      <div class="svc-icon">🌐</div>
-      <h3 class="svc-title">Beyond Templates.<br>Built to Convert.</h3>
-      <p class="svc-desc">We build high-speed, 3D, and interactive websites tailored to any industry — from specialized private clinics to large-scale manufacturing plants. Not a template. Never generic.</p>
-      <ul class="svc-list">
-        <li>3D & interactive animations</li>
-        <li>Mobile-first, lightning fast</li>
-        <li>WhatsApp & booking integrations</li>
-        <li>Google Maps & local SEO</li>
-        <li>Appointment / inquiry forms</li>
-        <li>Ongoing maintenance plans</li>
-      </ul>
-      <span class="svc-price">Starts ₹10,000</span>
-    </div>
+This creates a new burden on Indian strategic planners: the need to maintain readiness for limited kinetic responses as a routine element of the deterrence architecture rather than an exceptional act requiring extraordinary political will. Institutionalising that capacity — in doctrine, in rules of engagement, in the civil-military relationship that governs decision-making — is the unglamorous work that will determine whether Sindoor is remembered as a turning point or a one-off.
 
-    <!-- CONTENT -->
-    <div class="svc-card rv d1">
-      <div class="svc-num">02 · SEO Content & Copywriting</div>
-      <div class="svc-icon">✍️</div>
-      <h3 class="svc-title">Content That Ranks.<br>Copy That Sells.</h3>
-      <p class="svc-desc">Research-backed, SEO-optimised articles and web copy — geopolitics, technology, AI, health, business. Published on Medium. Written to rank on Google and read like a human wrote it.</p>
-      <div class="writing-demo">
-        <div class="wd-tabs">
-          <div class="wd-tab active" onclick="setTab(0)">AI & Tech</div>
-          <div class="wd-tab" onclick="setTab(1)">Geopolitics</div>
-          <div class="wd-tab" onclick="setTab(2)">Business</div>
-        </div>
-        <div class="wd-content show" id="wt0">"How AI is Quietly Reshaping the Global Economy" — 2,400 words. Keyword: AI impact on jobs. Ranked #4 on Google in 6 weeks. Internal links to 3 related articles."</div>
-        <div class="wd-content" id="wt1">"India's Strategic Posture After Operation Sindoor" — 1,800 words. Geopolitical analysis piece for defence & policy readership. 3,200+ Medium reads in first month."</div>
-        <div class="wd-content" id="wt2">"Why Local Businesses Fail at Digital Marketing (And How to Fix It)" — Evergreen SEO article, 1,600 words. Targeting: small business digital marketing India."</div>
-        <a href="https://medium.com/@reachtowordknight" class="wd-link" target="_blank">Read full portfolio on Medium →</a>
-      </div>
-      <br><span class="svc-price" style="margin-top:1rem">From ₹1,500 / article</span>
-    </div>
+**The Broader Regional Picture**
 
-    <!-- AUTOMATION -->
-    <div class="svc-card rv d2">
-      <div class="svc-num">03 · Business Automation</div>
-      <div class="svc-icon">⚡</div>
-      <h3 class="svc-title">Automate. Scale.<br>Save 10+ Hours Weekly.</h3>
-      <p class="svc-desc">Using n8n and modern automation tools, we connect your business systems so they work together — generating leads, following up with clients, onboarding customers, and running complex workflows without any manual effort.</p>
-      <ul class="svc-list">
-        <li>WhatsApp appointment reminders</li>
-        <li>Lead generation & CRM pipelines</li>
-        <li>AI chatbots on web & WhatsApp</li>
-        <li>Missed-call text back system</li>
-        <li>Automated client onboarding</li>
-        <li>Google review generation</li>
-      </ul>
-      <span class="svc-price">Custom Quote</span>
-    </div>
-  </div>
-</section>
+It would be a mistake to view the operation purely through the India-Pakistan lens. The demonstration of Indian precision strike capability, intelligence integration, and crisis communication has not gone unnoticed in Beijing. China's strategic planners, who have spent considerable effort modelling Indian conventional capabilities, now have a new data point. The implications for the Himalayan border calculus are not immediate — the operational environments are different enough to resist direct extrapolation — but the signal that India is willing to bear escalatory risk in pursuit of strategic objectives is relevant across both frontiers.
 
-<!-- AUTOMATION DEEP DIVE -->
-<section id="automation">
-  <div class="stag" style="color:var(--vybe2)">Automation Services</div>
-  <h2 class="stitle">Zero-Touch Systems<br>That Work While You Sleep</h2>
-  <p class="ssub">Stop doing repetitive tasks manually. These are the exact automations that save our clients 10–20 hours every week and recover lakhs in lost leads.</p>
+For India's partners, particularly in the United States and among the Gulf states that have significant stakes in regional stability, the operation has reinforced the perception of India as a state that acts with strategic intentionality rather than reacting purely to pressure. That reputation, carefully managed, is itself a form of strategic capital.
 
-  <div class="auto-grid">
-    <div class="ac rv">
-      <div class="ac-icon">💬</div>
-      <div class="ac-what">WhatsApp Automation</div>
-      <div class="ac-title">Auto-reminders, follow-ups & broadcasts</div>
-      <div class="ac-desc">Send appointment reminders, order confirmations, payment follow-ups, and personalised messages to hundreds of clients automatically — all through WhatsApp Business API.</div>
-      <div class="ac-tag">Most Popular</div>
-    </div>
-    <div class="ac rv d1">
-      <div class="ac-icon">🎯</div>
-      <div class="ac-what">Lead Generation</div>
-      <div class="ac-title">Capture, qualify & route leads automatically</div>
-      <div class="ac-desc">Capture leads from your website, Facebook, Instagram, or Google Ads. Instantly add them to a Google Sheet or CRM, tag them by industry, and assign a follow-up date — zero manual work.</div>
-      <div class="ac-tag">High ROI</div>
-    </div>
-    <div class="ac rv d2">
-      <div class="ac-icon">🔗</div>
-      <div class="ac-what">CRM & Pipeline Automation</div>
-      <div class="ac-title">Your leads always move forward — automatically</div>
-      <div class="ac-desc">When a lead fills a form, they are instantly added to your CRM, tagged by source and industry, and a follow-up task is created. Deals never fall through the cracks again.</div>
-      <div class="ac-tag">Enterprise Grade</div>
-    </div>
-    <div class="ac rv">
-      <div class="ac-icon">📲</div>
-      <div class="ac-what">Instagram & Facebook DM Automation</div>
-      <div class="ac-title">Comment a keyword → get a DM instantly</div>
-      <div class="ac-desc">When a user comments "WEBSITE" on your post, the system sends them a personalised DM with a booking link automatically — turning every viral post into a lead machine.</div>
-      <div class="ac-tag">Viral Growth</div>
-    </div>
-    <div class="ac rv d1">
-      <div class="ac-icon">📁</div>
-      <div class="ac-what">Automated Client Onboarding</div>
-      <div class="ac-title">From payment to welcome — in seconds</div>
-      <div class="ac-desc">When a client pays or signs, automation creates a Google Drive folder, sends a welcome email with intake form, and pings your team on WhatsApp — all in under 30 seconds.</div>
-      <div class="ac-tag">Professional</div>
-    </div>
-    <div class="ac rv d2">
-      <div class="ac-icon">📞</div>
-      <div class="ac-what">Missed-Call Text Back</div>
-      <div class="ac-title">Never lose a lead from a missed call again</div>
-      <div class="ac-desc">If your clinic or office misses a call, an automated SMS fires instantly: "Hi, sorry we missed your call! How can we help?" — recovering leads that would otherwise be lost forever.</div>
-      <div class="ac-tag">Crucial for Local Biz</div>
-    </div>
-    <div class="ac rv">
-      <div class="ac-icon">⭐</div>
-      <div class="ac-what">Automated Review Generation</div>
-      <div class="ac-title">More 5-star reviews on autopilot</div>
-      <div class="ac-desc">24 hours after a visit or purchase, a WhatsApp message goes out asking for a Google review. If they rate 4–5 stars, the system links them directly to your Google Maps page.</div>
-      <div class="ac-tag">SEO Booster</div>
-    </div>
-    <div class="ac rv d1">
-      <div class="ac-icon">🤖</div>
-      <div class="ac-what">AI Chatbots</div>
-      <div class="ac-title">Your 24/7 salesperson & support agent</div>
-      <div class="ac-desc">Deploy a smart AI assistant on your website or WhatsApp that answers FAQs, books appointments, captures customer details, and qualifies leads — even at 3am when you're asleep.</div>
-      <div class="ac-tag">24/7 Active</div>
-    </div>
-    <div class="ac rv d2">
-      <div class="ac-icon">📧</div>
-      <div class="ac-what">Email Marketing Automation</div>
-      <div class="ac-title">Drip campaigns that close deals for you</div>
-      <div class="ac-desc">Welcome sequences, nurture drips, and re-engagement campaigns that fire based on customer behaviour — moving leads from cold to closed without any manual sending.</div>
-      <div class="ac-tag">High Conversion</div>
-    </div>
-  </div>
-</section>
+**Conclusion**
 
-<!-- WHO WE SERVE -->
-<section id="clients">
-  <div class="stag">Industries Served</div>
-  <h2 class="stitle">Built for Every Business</h2>
-  <p class="ssub">From neighbourhood clinics to global manufacturers — Vybe.tech has delivered digital solutions across every sector.</p>
-  <div class="cl-grid">
-    <div class="cl-pill rv"><span class="cl-e">🏥</span><span class="cl-n">Doctors & Clinics</span></div>
-    <div class="cl-pill rv d1"><span class="cl-e">⚙️</span><span class="cl-n">Engineers</span></div>
-    <div class="cl-pill rv d2"><span class="cl-e">🏭</span><span class="cl-n">Manufacturing</span></div>
-    <div class="cl-pill rv"><span class="cl-e">🏪</span><span class="cl-n">Retailers & Shops</span></div>
-    <div class="cl-pill rv d1"><span class="cl-e">🎓</span><span class="cl-n">Coaching & Edu</span></div>
-    <div class="cl-pill rv d2"><span class="cl-e">🍽️</span><span class="cl-n">Restaurants</span></div>
-    <div class="cl-pill rv"><span class="cl-e">🏗️</span><span class="cl-n">Real Estate</span></div>
-    <div class="cl-pill rv d1"><span class="cl-e">💼</span><span class="cl-n">Startups</span></div>
-    <div class="cl-pill rv d2"><span class="cl-e">⚖️</span><span class="cl-n">Legal & CA Firms</span></div>
-    <div class="cl-pill rv"><span class="cl-e">💇</span><span class="cl-n">Salons & Wellness</span></div>
-    <div class="cl-pill rv d1"><span class="cl-e">🌿</span><span class="cl-n">Agriculture</span></div>
-    <div class="cl-pill rv d2"><span class="cl-e">🌍</span><span class="cl-n">Global Clients</span></div>
-  </div>
-</section>
+Operation Sindoor did not resolve the fundamental tensions of South Asian security. It did not eliminate the infrastructure of cross-border terrorism, nor did it fundamentally alter Pakistan's domestic political economy, which continues to generate the conditions that make that infrastructure sustainable. What it did was reset the parameters within which those tensions will be managed going forward. The new framework is not yet fully defined — it is being written now, in decisions taken in South Block and in GHQ Rawalpindi, in diplomatic channels and in the quiet recalibration of escalation models on both sides of the border. How that framework stabilises will define the security environment of the subcontinent for the next decade.`
+  },
+  {
+    label: "1500 Words",
+    wordCount: "~1500 words",
+    tag: "Business & Digital Marketing",
+    title: "Why Local Businesses in India Keep Failing at Digital Marketing — And the Exact Framework to Fix It",
+    readTime: "9 min read",
+    body: `Walk down any commercial street in Delhi, Mumbai, or Lucknow and you will find a peculiar contradiction. Shops that have been operating profitably for ten, fifteen, twenty years — businesses with loyal customers, quality products, and real community standing — sitting virtually invisible online. No website, or a website that looks like it was built in 2009 and abandoned. A Google Maps listing with three reviews, two of which are from relatives. An Instagram page with forty-seven followers and the last post from eleven months ago.
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="stag">Portfolio</div>
-  <h2 class="stitle">Recent Work</h2>
-  <p class="ssub">Websites that convert, content that ranks, automations that save hours every week.</p>
-  <div class="port-grid">
-    <div class="pc rv">
-      <div class="pc-top pc-top-1" data-l="Website · Clinic">🏥</div>
-      <div class="pc-body">
-        <div class="pc-tag">Website · Dermatology</div>
-        <h3 class="pc-title">Skin Clinic — Full Digital Setup</h3>
-        <p class="pc-desc">Complete website with online booking, WhatsApp integration, Google Maps, and patient testimonials — live in 5 days.</p>
-      </div>
-    </div>
-    <div class="pc rv d1">
-      <div class="pc-top pc-top-2" data-l="SEO Content · Medium">✍️</div>
-      <div class="pc-body">
-        <div class="pc-tag">Content · Geopolitics & AI</div>
-        <h3 class="pc-title">SEO Articles Ranking on Google</h3>
-        <p class="pc-desc">Long-form articles on AI, geopolitics, and technology — ranking page 1 on Google and growing a Medium readership.</p>
-        <a href="https://medium.com/@reachtowordknight" class="pc-a" target="_blank">Read on Medium →</a>
-      </div>
-    </div>
-    <div class="pc rv d2">
-      <div class="pc-top pc-top-3" data-l="Automation · WhatsApp">⚡</div>
-      <div class="pc-body">
-        <div class="pc-tag">Automation · Manufacturing</div>
-        <h3 class="pc-title">WhatsApp Lead & Reminder System</h3>
-        <p class="pc-desc">Automated WhatsApp system for a Delhi manufacturer — response time went from 24 hours to under 5 minutes. Zero manual effort.</p>
-      </div>
-    </div>
-  </div>
-</section>
+Meanwhile, a newer competitor with a fraction of the product quality and half the experience runs a clean website, collects Google reviews systematically, and shows up at the top of "near me" searches. The older business loses walk-ins it does not even know it is losing.
 
-<!-- PROCESS -->
-<section id="process">
-  <div class="stag">How It Works</div>
-  <h2 class="stitle">Launch in 4 Simple Steps</h2>
-  <div class="proc">
-    <div class="step rv">
-      <div class="step-n">1</div>
-      <h3 class="step-t">Discovery Call</h3>
-      <p class="step-d">We talk on WhatsApp to understand your business, goals, and what you need most urgently.</p>
-    </div>
-    <div class="step rv d1">
-      <div class="step-n">2</div>
-      <h3 class="step-t">Strategy & Quote</h3>
-      <p class="step-d">You receive a clear proposal — timeline, deliverables, and pricing. No surprises, ever.</p>
-    </div>
-    <div class="step rv d2">
-      <div class="step-n">3</div>
-      <h3 class="step-t">Build & Review</h3>
-      <p class="step-d">We build your website, content, or automation with previews shared for your feedback at every stage.</p>
-    </div>
-    <div class="step rv d3">
-      <div class="step-n">4</div>
-      <h3 class="step-t">Launch & Support</h3>
-      <p class="step-d">We go live. We stay available for support, updates, and ongoing growth as your business scales.</p>
-    </div>
-  </div>
-</section>
+This is not a technology problem. It is a perception problem compounded by a strategy problem. And it is entirely fixable.
 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="stag">Client Reviews</div>
-  <h2 class="stitle">What Clients Say</h2>
-  <div class="rating-bar-section rv">
-    <div class="rb-big">
-      <div class="rbn">4.9</div>
-      <div class="rbs">★★★★★</div>
-      <div class="rbc">Based on 30+ reviews</div>
-    </div>
-    <div class="rb-bars">
-      <div class="rb-row"><span class="rb-l">5★</span><div class="rb-tr"><div class="rb-f" style="width:90%"></div></div></div>
-      <div class="rb-row"><span class="rb-l">4★</span><div class="rb-tr"><div class="rb-f" style="width:8%"></div></div></div>
-      <div class="rb-row"><span class="rb-l">3★</span><div class="rb-tr"><div class="rb-f" style="width:2%"></div></div></div>
-      <div class="rb-row"><span class="rb-l">2★</span><div class="rb-tr"><div class="rb-f" style="width:0%"></div></div></div>
-      <div class="rb-row"><span class="rb-l">1★</span><div class="rb-tr"><div class="rb-f" style="width:0%"></div></div></div>
-    </div>
-  </div>
-  <div class="tg">
-    <div class="tc feat rv">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"Vybe.tech built our clinic website in 4 days. Patients book online, WhatsApp reminders go out automatically, and our walk-ins have gone up noticeably since launch. Best investment we made."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#5b2d8e">DR</div><div><div class="tc-name">Dr. Radhika Sharma</div><div class="tc-role">Dermatologist, Rohini Delhi</div></div></div>
-    </div>
-    <div class="tc rv d1">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"The SEO articles Vybe.tech wrote are ranking page 1 within two months. Research quality and writing style is genuinely impressive — not the typical AI-generated fluff you see everywhere."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#1a5e32">MK</div><div><div class="tc-name">Manish Kumar</div><div class="tc-role">Director, MK Engineering Solutions</div></div></div>
-    </div>
-    <div class="tc rv d2">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"The missed-call text back system alone recovered 11 leads in the first week. Our clinic was losing money every time a call went unanswered. That's fixed now."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#7a3a00">SP</div><div><div class="tc-name">Suresh Patel</div><div class="tc-role">Owner, Patel Industries Pvt Ltd</div></div></div>
-    </div>
-    <div class="tc rv">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"The Instagram DM automation is a game-changer. We ran one reel, told people to comment 'COURSE' and 140 leads came in automatically overnight. Vybe.tech set it up in one afternoon."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#1a3a6b">PV</div><div><div class="tc-name">Priya Verma</div><div class="tc-role">Founder, Achievers Coaching Centre</div></div></div>
-    </div>
-    <div class="tc rv d1">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-txt">"Review automation took us from 18 Google reviews to 94 in two months. Our local search ranking jumped from page 3 to top 3. Bookings increased 40% just from that change."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#1a5e3e">NS</div><div><div class="tc-name">Neha Singh</div><div class="tc-role">Practice Manager, Wellness Clinic</div></div></div>
-    </div>
-    <div class="tc rv d2">
-      <div class="tc-stars">★★★★☆</div>
-      <p class="tc-txt">"Our restaurant now has a website, online reservations, WhatsApp confirmations, and shows on Google Maps. Went from zero online presence to fully discoverable. Worth every rupee."</p>
-      <div class="tc-bot"><div class="tc-av" style="background:#5e1a1a">AK</div><div><div class="tc-name">Amit Kapoor</div><div class="tc-role">Owner, Spice Garden Restaurant</div></div></div>
-    </div>
-  </div>
-</section>
+**Why the Problem Exists**
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="stag">Pricing</div>
-  <h2 class="stitle">Transparent Pricing.<br>No Surprises.</h2>
-  <p class="ssub">Simple packages to get you started. All include a free discovery call and post-launch support.</p>
-  <div class="price-grid">
-    <div class="pcard rv">
-      <div class="p-badge">Starter</div>
-      <div class="p-name">Starter Pack</div>
-      <div class="p-amt">₹10,000</div>
-      <div class="p-per">one-time setup</div>
-      <p class="p-desc">Perfect for local businesses and professionals who need a clean, fast, professional online presence — without the complexity.</p>
-      <ul class="p-feats">
-        <li class="p-feat">Up to 3 pages</li>
-        <li class="p-feat">Mobile responsive design</li>
-        <li class="p-feat">Basic SEO setup</li>
-        <li class="p-feat">1 month free support</li>
-      </ul>
-      <a href="https://wa.me/918510084896" class="btn-pcard btn-light" target="_blank">Get Started</a>
-    </div>
-    <div class="pcard pop rv d1">
-      <div class="p-badge hot">Most Popular</div>
-      <div class="p-name">Growth Pack</div>
-      <div class="p-amt" style="background:linear-gradient(90deg,var(--vybe2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">₹24,000</div>
-      <div class="p-per" style="color:var(--muted)">setup + 3 months support</div>
-      <p class="p-desc">For businesses that want a powerful website AND content strategy to dominate search results — plus help automating their business setup.</p>
-      <ul class="p-feats">
-        <li class="p-feat">Everything in Starter</li>
-        <li class="p-feat">Up to 8 pages</li>
-        <li class="p-feat">2 SEO Blog articles</li>
-        <li class="p-feat">Help automating business setup</li>
-        <li class="p-feat">3 months priority support</li>
-      </ul>
-      <a href="https://wa.me/918510084896" class="btn-pcard btn-dark" target="_blank">Get Started</a>
-    </div>
-    <div class="pcard rv d2">
-      <div class="p-badge">Automation</div>
-      <div class="p-name">Automate Pack</div>
-      <div class="p-amt">Custom</div>
-      <div class="p-per">tailored to your workflows</div>
-      <p class="p-desc">For businesses ready to save 10+ hours per week. Full automation stack — WhatsApp, CRM, lead gen, chatbot, review systems, and more.</p>
-      <ul class="p-feats">
-        <li class="p-feat">WhatsApp automation</li>
-        <li class="p-feat">Lead generation funnel</li>
-        <li class="p-feat">AI chatbot setup</li>
-        <li class="p-feat">Missed-call text back</li>
-        <li class="p-feat">CRM & review automation</li>
-        <li class="p-feat">Ongoing maintenance</li>
-      </ul>
-      <a href="https://wa.me/918510084896" class="btn-pcard btn-light" target="_blank">Get a Quote</a>
-    </div>
-  </div>
-</section>
+The first reason local businesses fail at digital marketing in India is that most of them were built in an era where digital marketing simply was not the acquisition channel. A medical store in Karol Bagh that has been running since 1987 built its customer base through foot traffic, word of mouth, and relationships with nearby doctors. That model worked. It still partially works. The problem is that the customer base is ageing, and the incoming generation of customers — people in their twenties and early thirties — finds businesses primarily through search and social proof, not through physical proximity.
 
-<!-- CTA -->
-<section id="cta">
-  <div class="stag" style="color:var(--vybe2)">Ready?</div>
-  <h2>Let's Build Something<br>Extraordinary Together.</h2>
-  <p>Whether you're in Delhi, Mumbai, Bangalore — or London, Dubai, or New York.<br>One message is all it takes. Zero jargon. Zero pressure. Just results.</p>
-  <div class="cta-btns">
-    <a href="https://wa.me/918510084896" class="btn-wa" target="_blank">💬 WhatsApp: +91 85100 84896</a>
-    <a href="https://medium.com/@reachtowordknight" class="btn-ghost" target="_blank">📝 Read My Work on Medium</a>
-  </div>
-</section>
+The second reason is the advice ecosystem. The typical experience of a small business owner who decides to "do digital marketing" goes something like this: a nephew offers to manage Instagram for free and posts irregularly for four months before losing interest; a freelancer promises Google Ads results and burns through a budget with nothing to show; a web developer builds a site on a platform the owner cannot update and charges for every minor change. After two or three cycles of this, the business owner concludes that digital marketing does not work for businesses like theirs. This conclusion is wrong, but the experience that produced it is completely understandable.
 
-<!-- AI CHATBOT SECTION -->
-<section id="chat-section">
-  <div class="chat-wrap">
-    <div class="stag" style="text-align:center">AI Assistant</div>
-    <h2 class="stitle" style="text-align:center;font-size:1.6rem">Chat With Our AI — Right Here</h2>
-    <p class="ssub" style="text-align:center;margin:0 auto 2rem;max-width:480px">Tell us what you need. Our AI assistant will help you figure out which service fits best and connect you to Vybe.tech instantly.</p>
-    <div class="chat-box">
-      <div class="chat-header">
-        <div class="chat-av">🤖</div>
-        <div>
-          <div class="chat-hname">Vybe AI Assistant</div>
-          <div class="chat-hstatus">Online — responds instantly</div>
-        </div>
-      </div>
-      <div class="chat-msgs" id="chat-msgs"></div>
-      <div class="chat-qs" id="chat-qs">
-        <span class="cq" onclick="askQ(this)">I need a website</span>
-        <span class="cq" onclick="askQ(this)">I want SEO content</span>
-        <span class="cq" onclick="askQ(this)">Tell me about automation</span>
-        <span class="cq" onclick="askQ(this)">What's your pricing?</span>
-        <span class="cq" onclick="askQ(this)">How fast can you deliver?</span>
-      </div>
-      <div class="chat-input-row">
-        <input type="text" class="chat-input" id="chat-in" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()">
-        <button class="chat-send" onclick="sendChat()">Send</button>
-      </div>
-    </div>
-  </div>
-</section>
+The third reason, and perhaps the most fundamental, is the absence of a system. Digital marketing that works is not a series of one-off activities — a website here, a few social posts there. It is a system in which each element feeds the others: the website captures and converts traffic, the SEO brings in that traffic, the Google reviews build the trust that converts the visitor, the WhatsApp follow-up nurtures the lead that did not convert immediately, the automation handles the repetitive touchpoints so the business owner can focus on delivery. Without the system, individual tactics produce individual results that fade when attention moves elsewhere.
 
-<!-- FOOTER -->
-<footer>
-  <div class="fl"><span class="fl-d"></span>Vybe.tech</div>
-  <ul class="flinks">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#automation">Automation</a></li>
-    <li><a href="#portfolio">Work</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="https://wa.me/918510084896" target="_blank">WhatsApp</a></li>
-    <li><a href="https://medium.com/@reachtowordknight" target="_blank">Medium</a></li>
-  </ul>
-  <div class="fcopy">© 2025 Vybe.tech · Pan India & Global · All rights reserved</div>
-</footer>
+**What Actually Moves the Needle for Local Businesses**
 
-<script>
-// CURSOR
-const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function raf(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=Math.round(rx)+'px';cr.style.top=Math.round(ry)+'px';requestAnimationFrame(raf)})();
-document.querySelectorAll('a,button,.cq,.wd-tab').forEach(el=>{el.addEventListener('mouseenter',()=>{cr.style.transform='translate(-50%,-50%) scale(2)';cr.style.borderColor='rgba(124,92,252,.7)';cur.style.transform='translate(-50%,-50%) scale(.4)'});el.addEventListener('mouseleave',()=>{cr.style.transform='translate(-50%,-50%) scale(1)';cr.style.borderColor='rgba(124,92,252,.5)';cur.style.transform='translate(-50%,-50%) scale(1)'})});
+Having worked with clinics, retailers, service businesses, and manufacturers across Delhi and beyond, the interventions with the clearest, most measurable impact fall into four categories.
 
-// NAV
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>50));
+*Google Presence and Reviews*
 
-// 3D HERO
-(()=>{
-  const canvas=document.getElementById('c3d');
-  const W=()=>canvas.clientWidth,H=()=>canvas.clientHeight;
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  const scene=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(55,W()/H(),.1,100);
-  cam.position.z=5;
-  const resize=()=>{renderer.setSize(W(),H(),false);cam.aspect=W()/H();cam.updateProjectionMatrix()};
-  resize();window.addEventListener('resize',resize);
+For any local business, Google is the primary discovery channel. Someone searching for "skin clinic in Rohini" or "chartered accountant Dwarka" is a high-intent lead — they are not browsing, they are ready to make a decision. Showing up prominently in that search, with a complete profile and a strong review count, converts at a dramatically higher rate than any social media channel.
 
-  // Glowing wireframe cube
-  const geo=new THREE.BoxGeometry(2,2,2);
-  const mat=new THREE.MeshStandardMaterial({color:0x7c5cfc,wireframe:true,emissive:0x3a2080,emissiveIntensity:.8});
-  const cube=new THREE.Mesh(geo,mat);
-  cube.position.set(3.2,0,0);scene.add(cube);
+The review problem is one that almost every business shares but almost none have systematically addressed. Most businesses have significantly more satisfied customers than they have Google reviews, for the simple reason that satisfied customers have no particular prompt to leave a review while dissatisfied customers are highly motivated. Closing this gap requires a system: a WhatsApp message sent 24 hours after a visit, a direct link to the Google review page, a gentle framing that makes leaving a review easy and natural. Businesses that implement this consistently see their review count double or triple within three months, with corresponding improvements in local search ranking.
 
-  // Inner solid cube slightly smaller
-  const coreG=new THREE.BoxGeometry(1.6,1.6,1.6);
-  const coreM=new THREE.MeshStandardMaterial({color:0x22d3ee,transparent:true,opacity:.08,wireframe:false});
-  const core=new THREE.Mesh(coreG,coreM);
-  cube.add(core);
+*A Website That Works for the Business*
 
-  // Orbiting small spheres
-  const orb=[];
-  const orbG=new THREE.SphereGeometry(.08,8,8);
-  [[0x7c5cfc,2.8],[0x22d3ee,3.5],[0xa78bfa,3.1]].forEach(([col,r],i)=>{
-    const m=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:.6});
-    const s=new THREE.Mesh(orbG,m);
-    s.userData={r,speed:.4+i*.15,phase:i*(Math.PI*2/3)};
-    scene.add(s);orb.push(s);
-  });
+The standard for what a local business website needs to do is often misunderstood. It does not need to be beautiful in the way a fashion brand's website needs to be beautiful. It needs to do four things: establish trust immediately, answer the most common questions before they are asked, make it frictionless to take the next step (call, WhatsApp, book), and load quickly on a 4G connection.
 
-  // Floating particles
-  const pts=[];
-  const ptG=new THREE.SphereGeometry(.035,4,4);
-  for(let i=0;i<40;i++){
-    const pm=new THREE.MeshStandardMaterial({color:i%2===0?0x7c5cfc:0x22d3ee,emissive:i%2===0?0x7c5cfc:0x22d3ee,emissiveIntensity:.5,transparent:true,opacity:.6});
-    const p=new THREE.Mesh(ptG,pm);
-    p.position.set((Math.random()-.5)*12,(Math.random()-.5)*8,(Math.random()-.5)*4);
-    p.userData={vx:(Math.random()-.5)*.004,vy:(Math.random()-.5)*.004,phase:Math.random()*Math.PI*2};
-    scene.add(p);pts.push(p);
+Most websites built for local businesses in India fail on the third and fourth criteria. A website that requires seven clicks to find the phone number is a website that is losing enquiries every day. A website that takes eight seconds to load on mobile — common for sites built on unoptimised WordPress with too many plugins — has already lost half its visitors before the page appears. These are not design problems. They are engineering decisions that have direct revenue consequences.
+
+*WhatsApp as an Infrastructure Layer*
+
+India runs on WhatsApp. The business that has not yet integrated WhatsApp into its customer communication is leaving a significant amount of convenience — and therefore loyalty — on the table. But WhatsApp automation goes beyond the obvious use case of responding to enquiries.
+
+Consider a dental clinic. Every patient who completes a treatment leaves with an appointment scheduled six months out. Without a system, a significant percentage of those patients does not show up — life gets busy, they forget, or they switch to a competitor who contacts them first. With a WhatsApp reminder sequence — a message at one month, one week, and one day before the appointment — attendance rates improve substantially. The cost of implementing this system is trivial compared to the revenue recovered from no-shows.
+
+The same logic applies to product businesses. A pharmacy that sends a WhatsApp message to chronic medication customers when their typical refill cycle is due has created a retention mechanism that most large pharmacy chains have not implemented. The relationship that mechanism implies — "we know you, we track your needs, we reach out before you have to think about it" — is exactly the kind of thing that makes customers loyal to small businesses over large ones, if the small business actually does it.
+
+*Content as Long-Term Infrastructure*
+
+SEO content is the most underutilised channel for local and small businesses in India. The reason is partly timeline — SEO takes three to six months to produce measurable results, which feels too slow for a business owner dealing with immediate pressures. The other reason is that most people who have tried content marketing for their business have done it wrong: generic posts, no keyword research, no internal linking strategy, no consistency.
+
+Done correctly, SEO content compounds. An article written today and optimised for a specific search query continues to bring in traffic for years. A cluster of ten well-written, properly interlinked articles on a specific topic can establish a small business as a genuine authority in its niche — the clinic that owns the content on "hair fall treatment options in Delhi," or the legal firm whose articles dominate searches for "tenant rights notice period India." This kind of content cannot be replicated by a competitor overnight, because it takes time to build domain authority. The business that starts now builds a moat. The business that waits gives that moat to a competitor.
+
+**The System, Not the Tactic**
+
+The framework that works is not any single one of these elements in isolation. It is all of them, connected:
+
+The SEO content and Google presence bring in the top-of-funnel traffic. The website converts that traffic into enquiries. The WhatsApp automation nurtures those enquiries and follows up on the ones that did not convert immediately. The review generation system builds the social proof that makes the next visitor convert at a higher rate. Each element reinforces the others, and the compounding effects accumulate over months and years.
+
+The barrier to implementing this system is not technical. The tools exist, they are affordable, and they do not require technical expertise to use once set up. The barrier is the initial investment of time and attention — in understanding what the business actually needs, in building the system properly rather than cheaply, and in maintaining the discipline to keep it running.
+
+**What to Do First**
+
+For a business that is starting from near zero on digital presence, the priority sequence matters.
+
+Start with Google. Claim and complete the Google Business Profile, upload photos, add correct hours and contact information. This costs nothing and produces results faster than anything else.
+
+Then address reviews systematically. Identify your twenty most loyal customers and personally ask them to leave a Google review, with a direct link. This is the one case where manual outreach beats automation, because the personal ask has a much higher conversion rate.
+
+Then build or rebuild the website with the four criteria above in mind: trust, information, frictionless action, speed.
+
+Then layer in automation — starting with WhatsApp reminders if you are a service business, or follow-up sequences if you are a product business.
+
+Then begin content, treating it as infrastructure rather than a campaign.
+
+None of this is complicated. All of it takes consistent effort over months, not days. But the businesses that build this system are building something durable — an acquisition and retention engine that works continuously, at scale, at a fraction of the cost of traditional advertising.
+
+The businesses that do not build it will keep losing customers to competitors who did. Often without ever knowing why foot traffic quietly declined.`
   }
+];
 
-  scene.add(new THREE.AmbientLight(0xffffff,.3));
-  const dl=new THREE.DirectionalLight(0x7c5cfc,2);dl.position.set(5,5,5);scene.add(dl);
-  const pl=new THREE.PointLight(0x22d3ee,2,12);pl.position.set(-3,2,3);scene.add(pl);
-  const pl2=new THREE.PointLight(0x7c5cfc,1.5,8);pl2.position.set(3,3,2);scene.add(pl2);
+// ─── DENTAL CLINIC DEMO ───────────────────────────────────────────────────────
+const DentalClinicDemo = ({ onClose }) => {
+  const [activeSection, setActiveSection] = useState("home");
+  const services = [
+    { icon: "🦷", name: "General Dentistry", desc: "Comprehensive check-ups, fillings, extractions and preventive care for the whole family." },
+    { icon: "✨", name: "Teeth Whitening", desc: "Professional-grade whitening treatments. 3–8 shades brighter in a single session." },
+    { icon: "🦴", name: "Dental Implants", desc: "Permanent tooth replacement solutions that look, feel, and function like natural teeth." },
+    { icon: "😁", name: "Orthodontics", desc: "Clear aligners and traditional braces for children, teens, and adults." },
+    { icon: "🔬", name: "Root Canal Therapy", desc: "Pain-free root canal treatment using modern rotary instruments." },
+    { icon: "🧹", name: "Scaling & Cleaning", desc: "Professional deep cleaning to remove plaque, tartar and keep gums healthy." },
+  ];
+  const testimonials = [
+    { name: "Priya Sharma", role: "Patient since 2019", text: "Dr. Mehta is the most gentle dentist I've ever been to. My kids love coming here — that alone is worth everything.", stars: 5, bg: "#7c3aed" },
+    { name: "Rohit Gupta", role: "Implant Patient", text: "Had three implants done. The entire process was explained clearly, the pain was minimal, and the results are perfect.", stars: 5, bg: "#0891b2" },
+    { name: "Sunita Malhotra", role: "Orthodontic Patient", text: "Clear aligners from Smile Dental transformed my confidence. 11 months and the results are incredible.", stars: 5, bg: "#059669" },
+  ];
 
-  let mouse={x:0,y:0};
-  document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth-.5)*2;mouse.y=-(e.clientY/window.innerHeight-.5)*2});
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 10000, background: "#fff", overflowY: "auto", fontFamily: "'Outfit', sans-serif" }}>
+      {/* Demo Banner */}
+      <div style={{ background: "linear-gradient(90deg, #7c3aed, #0891b2)", color: "#fff", padding: "10px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13, fontWeight: 600, letterSpacing: 1, position: "sticky", top: 0, zIndex: 100 }}>
+        <span>🎨 DEMO — Smile Dental Clinic Website · Built by Vybe.tech</span>
+        <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", padding: "6px 16px", borderRadius: 20, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕ Close Demo</button>
+      </div>
 
-  let t=0;
-  (function anim(){
-    requestAnimationFrame(anim);t+=.008;
-    cube.rotation.x+=.006;cube.rotation.y+=.009;
-    cube.position.y=Math.sin(t*.7)*.25;
-    cam.position.x+=(mouse.x*.4-cam.position.x)*.05;
-    cam.position.y+=(mouse.y*.25-cam.position.y)*.05;
-    cam.lookAt(0,0,0);
-    orb.forEach(o=>{const u=o.userData;o.position.set(Math.cos(t*u.speed+u.phase)*u.r+cube.position.x,Math.sin(t*u.speed+u.phase)*.8+cube.position.y,Math.sin(t*u.speed*.7+u.phase)*u.r*.3+cube.position.z)});
-    pts.forEach(p=>{const u=p.userData;p.position.x+=u.vx;p.position.y+=u.vy;if(Math.abs(p.position.x)>6)u.vx*=-1;if(Math.abs(p.position.y)>4)u.vy*=-1;p.material.opacity=.3+Math.sin(t*2+u.phase)*.3});
-    renderer.render(scene,cam);
-  })();
-})();
+      {/* Clinic Nav */}
+      <nav style={{ background: "#0f172a", padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64, position: "sticky", top: 44, zIndex: 99 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ width: 36, height: 36, background: "linear-gradient(135deg, #7c3aed, #0891b2)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🦷</div>
+          <span style={{ color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: 18 }}>Smile<span style={{ color: "#7c3aed" }}>Dental</span></span>
+        </div>
+        <div style={{ display: "flex", gap: 24, listStyle: "none" }}>
+          {["Home", "Services", "Testimonials", "Book Now"].map(l => (
+            <span key={l} onClick={() => setActiveSection(l.toLowerCase().replace(" ", ""))} style={{ color: activeSection === l.toLowerCase().replace(" ", "") ? "#7c3aed" : "rgba(255,255,255,0.7)", cursor: "pointer", fontSize: 14, fontWeight: 600, transition: "color .2s" }}>{l}</span>
+          ))}
+        </div>
+        <a href="tel:+918285486394" style={{ background: "linear-gradient(135deg, #7c3aed, #0891b2)", color: "#fff", padding: "9px 20px", borderRadius: 20, fontSize: 13, fontWeight: 700, textDecoration: "none" }}>📞 Book Appointment</a>
+      </nav>
 
-// WRITING TABS
-function setTab(i){
-  document.querySelectorAll('.wd-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
-  document.querySelectorAll('.wd-content').forEach((c,j)=>c.classList.toggle('show',j===i));
-}
+      {/* Hero */}
+      <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c4a6e 100%)", padding: "100px 60px 80px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 70% 50%, rgba(124,58,237,0.15), transparent 60%)" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 700 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", padding: "5px 14px", borderRadius: 20, fontSize: 12, fontWeight: 700, letterSpacing: 2, color: "#a78bfa", marginBottom: 24, textTransform: "uppercase" }}>✦ Delhi's Most Trusted Dental Care</div>
+          <h1 style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 800, lineHeight: 1.05, color: "#fff", marginBottom: 20, letterSpacing: -1 }}>
+            Your Perfect Smile<br /><span style={{ background: "linear-gradient(90deg, #a78bfa, #38bdf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Starts Here.</span>
+          </h1>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 17, lineHeight: 1.7, marginBottom: 36, fontWeight: 300 }}>Advanced dental care with a gentle touch. From routine check-ups to complete smile transformations — we make every visit comfortable, fast, and affordable.</p>
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <a href="https://wa.me/918285486394" style={{ background: "linear-gradient(135deg, #7c3aed, #0891b2)", color: "#fff", padding: "14px 32px", borderRadius: 40, fontWeight: 700, fontSize: 15, textDecoration: "none", display: "flex", alignItems: "center", gap: 8, boxShadow: "0 8px 30px rgba(124,58,237,0.4)" }}>📅 Book Free Consultation</a>
+            <a href="tel:+918285486394" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", padding: "14px 32px", borderRadius: 40, fontWeight: 600, fontSize: 15, textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>📞 +91 82854 86394</a>
+          </div>
+          <div style={{ display: "flex", gap: 40, marginTop: 48 }}>
+            {[["2000+", "Happy Patients"], ["15+", "Years Experience"], ["4.9★", "Google Rating"]].map(([n, l]) => (
+              <div key={l}>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, fontSize: 32, background: "linear-gradient(90deg, #a78bfa, #38bdf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 }}>{n}</div>
+                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, letterSpacing: 2, textTransform: "uppercase", marginTop: 4 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-// SCROLL REVEAL
-const rvEls=document.querySelectorAll('.rv');
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1});
-rvEls.forEach(el=>obs.observe(el));
+      {/* Services */}
+      <div style={{ background: "#f8fafc", padding: "80px 60px" }}>
+        <div style={{ textAlign: "center", marginBottom: 50 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "#7c3aed", marginBottom: 12 }}>Our Services</div>
+          <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 800, color: "#0f172a", letterSpacing: -1 }}>Complete Dental Care<br />Under One Roof</h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          {services.map((s, i) => (
+            <div key={i} style={{ background: "#fff", borderRadius: 16, padding: "32px 28px", border: "1px solid #e2e8f0", transition: "all .3s", cursor: "pointer" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#7c3aed"; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(124,58,237,0.1)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>{s.icon}</div>
+              <h3 style={{ fontWeight: 700, fontSize: 17, color: "#0f172a", marginBottom: 8 }}>{s.name}</h3>
+              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6 }}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-// AI CHATBOT
-const botReplies={
-  'website':["Great choice! We build 3D, interactive websites for any business — clinics, engineers, manufacturers, restaurants, you name it.\n\nStarter Pack starts at ₹10,000 (up to 3 pages) and Growth Pack is ₹24,000 (up to 8 pages + SEO articles). Want me to connect you to Vybe.tech directly?","We've built websites for doctors, coaching institutes, manufacturers, and restaurants. All mobile-first, SEO-ready, and delivered fast. Should I send you a WhatsApp link to Vybe.tech?"],
-  'seo':["Excellent! We write research-backed SEO articles that actually rank on Google. Geopolitics, AI, tech, business, health — any niche.\n\nYou can read samples at medium.com/@reachtowordknight. Pricing starts at ₹1,500 per article. Want to get started?","SEO content is our speciality — we build topic clusters with internal linking strategies that compound over time. One article leads to another ranking, and so on. Want a free consultation?"],
-  'automation':["This is where we really shine! 🚀 We build WhatsApp automation, lead generation funnels, AI chatbots, missed-call text back systems, Instagram DM automation, automated client onboarding, CRM pipelines, and Google review automation.\n\nWhich of these sounds most useful for your business right now?","Automation saves our clients 10–20 hours a week. The missed-call text back alone has recovered 10+ leads per week for a Delhi clinic. Want a custom quote?"],
-  'pricing':["Here's the quick overview:\n\n• Starter Pack — ₹10,000 (up to 3 pages, mobile responsive, basic SEO, 1 month support)\n• Growth Pack — ₹24,000 (up to 8 pages, 2 SEO articles, automation help, 3 months support)\n• Automation Pack — Custom quote based on your workflows\n\nAll include a free discovery call. Which fits you best?"],
-  'delivery':["Fast! Most websites are live within 5–7 business days. SEO articles within 48–72 hours. Automation setups take 3–10 days depending on complexity.\n\nWant to book a quick call with Vybe.tech to discuss your project timeline?"],
-  'default':["Thanks for your message! I'm the Vybe.tech AI assistant. I can tell you about our website development, SEO content writing, and business automation services.\n\nOr you can reach Vybe.tech directly on WhatsApp: +91 85100 84896 — he typically responds within minutes!","Great question! The best next step is a quick discovery call with Vybe.tech — it's free, zero pressure, and helps us understand exactly what you need.\n\nJust tap the WhatsApp button below or click here: wa.me/918510084896"]
+      {/* Testimonials */}
+      <div style={{ background: "#0f172a", padding: "80px 60px" }}>
+        <div style={{ textAlign: "center", marginBottom: 50 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "#a78bfa", marginBottom: 12 }}>Patient Stories</div>
+          <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 800, color: "#fff", letterSpacing: -1 }}>What Our Patients Say</h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          {testimonials.map((t, i) => (
+            <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px" }}>
+              <div style={{ color: "#fbbf24", fontSize: 14, letterSpacing: 2, marginBottom: 16 }}>{"★".repeat(t.stars)}</div>
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 14, lineHeight: 1.7, fontStyle: "italic", marginBottom: 20 }}>"{t.text}"</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 40, height: 40, background: t.bg, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#fff", fontSize: 13 }}>{t.name.split(" ").map(n => n[0]).join("")}</div>
+                <div>
+                  <div style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{t.name}</div>
+                  <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 12 }}>{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Contact */}
+      <div style={{ background: "#f8fafc", padding: "80px 60px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "#7c3aed", marginBottom: 12 }}>Find Us</div>
+          <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: 40, fontWeight: 800, color: "#0f172a", letterSpacing: -1, marginBottom: 24 }}>Visit Smile Dental Clinic</h2>
+          {[["📍", "Location", "Shastri Park, New Delhi — 110053"], ["📞", "Phone", "+91 82854 86394"], ["🕐", "Hours", "Mon–Sat: 9AM–8PM | Sun: 10AM–4PM"], ["💬", "WhatsApp", "Chat with us for instant booking"]].map(([icon, label, val]) => (
+            <div key={label} style={{ display: "flex", gap: 16, marginBottom: 20 }}>
+              <div style={{ width: 44, height: 44, background: "rgba(124,58,237,0.1)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{icon}</div>
+              <div><div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: "#7c3aed", marginBottom: 2 }}>{label}</div><div style={{ fontSize: 15, color: "#334155" }}>{val}</div></div>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: "#e2e8f0", borderRadius: 16, height: 300, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 60, flexDirection: "column", gap: 12 }}>
+          <span>🗺️</span>
+          <span style={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>Google Maps — Shastri Park, Delhi</span>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div style={{ background: "#0f172a", padding: "28px 60px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 13 }}>© 2025 Smile Dental Clinic · Built by <span style={{ color: "#a78bfa" }}>Vybe.tech</span></span>
+        <a href="https://wa.me/918285486394" style={{ background: "#25d366", color: "#fff", padding: "8px 20px", borderRadius: 20, fontSize: 13, fontWeight: 700, textDecoration: "none" }}>💬 WhatsApp Us</a>
+      </div>
+    </div>
+  );
 };
 
-const msgs=document.getElementById('chat-msgs');
-let chatStarted=false;
+// ─── MAIN APP ─────────────────────────────────────────────────────────────────
+export default function VybeTech() {
+  const [page, setPage] = useState("home");
+  const [activeSpecimen, setActiveSpecimen] = useState(0);
+  const [showClinicDemo, setShowClinicDemo] = useState(false);
+  const [openSpec, setOpenSpec] = useState(null);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const topRef = useRef(null);
 
-function addMsg(text,type){
-  const d=document.createElement('div');
-  d.className='msg '+type;
-  d.textContent=text;
-  msgs.appendChild(d);
-  msgs.scrollTop=msgs.scrollHeight;
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", h);
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+
+  const navigate = (p) => {
+    setPage(p);
+    setMobileMenu(false);
+    setTimeout(() => topRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+  };
+
+  const css = {
+    bg: "#06060e", bg2: "#0d0d1a", bg3: "#111122",
+    vybe: "#7c5cfc", vybe2: "#a78bfa", cyan: "#22d3ee",
+    text: "#f0eee8", muted: "rgba(240,238,232,0.5)",
+    border: "rgba(255,255,255,0.07)",
+  };
+
+  // ── NAV ──────────────────────────────────────────────────────────────────────
+  const Nav = () => (
+    <nav style={{ position: "sticky", top: 0, zIndex: 500, background: scrolled ? "rgba(6,6,14,0.97)" : "rgba(6,6,14,0.8)", backdropFilter: "blur(24px)", borderBottom: `1px solid ${css.border}`, padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68, transition: "all .3s", boxShadow: scrolled ? "0 4px 30px rgba(124,92,252,0.1)" : "none" }}>
+      <div onClick={() => navigate("home")} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", textDecoration: "none" }}>
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: css.vybe, boxShadow: `0 0 12px ${css.vybe}` }} />
+        <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 17, color: css.text }}>Vybe.tech</span>
+      </div>
+      <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
+        {[["home","Home"], ["services","Services"], ["writing","Writing"], ["portfolio","Work"], ["contact","Contact"]].map(([p, l]) => (
+          <span key={p} onClick={() => navigate(p)} style={{ fontSize: 13, fontWeight: 500, color: page === p ? css.vybe2 : css.muted, cursor: "pointer", letterSpacing: ".06em", textTransform: "uppercase", transition: "color .2s", borderBottom: page === p ? `1px solid ${css.vybe2}` : "1px solid transparent", paddingBottom: 2 }}>{l}</span>
+        ))}
+        <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ background: css.vybe, color: "#fff", padding: "9px 22px", borderRadius: 100, fontSize: 13, fontWeight: 600, textDecoration: "none", boxShadow: `0 0 20px rgba(124,92,252,.3)`, transition: "all .2s" }}>Book a Call →</a>
+      </div>
+    </nav>
+  );
+
+  // ── HOME PAGE ─────────────────────────────────────────────────────────────────
+  const HomePage = () => {
+    const services = [
+      { num: "01", icon: "🌐", title: "Immersive Web Design", desc: "High-speed, 3D, interactive websites tailored to any industry. Not a template. Never generic.", items: ["3D & interactive animations","Mobile-first, lightning fast","WhatsApp & booking integrations","Google Maps & local SEO"], price: "Starts ₹10,000", gradient: "from-purple-900 to-indigo-900" },
+      { num: "02", icon: "✍️", title: "SEO Content & Copywriting", desc: "Research-backed, SEO-optimised articles and web copy — geopolitics, technology, AI, health, business. Written to rank and read like a human wrote it.", items: ["Long-form SEO articles","Web copy & landing pages","Medium publication strategy","Keyword cluster strategy"], price: "From ₹1,500/article", gradient: "from-blue-900 to-teal-900" },
+      { num: "03", icon: "⚡", title: "Business Automation", desc: "n8n-powered automation that connects your business systems — leads, follow-ups, onboarding, reviews — running without manual effort.", items: ["WhatsApp appointment reminders","Lead gen & CRM pipelines","AI chatbots on web & WhatsApp","Google review generation"], price: "Custom Quote", gradient: "from-violet-900 to-purple-900" },
+    ];
+    const automations = [
+      { icon: "💬", tag: "Most Popular", title: "WhatsApp Automation", what: "Auto-reminders, follow-ups & broadcasts", desc: "Send appointment reminders, order confirmations, payment follow-ups automatically through WhatsApp Business API." },
+      { icon: "🎯", tag: "High ROI", title: "Lead Generation", what: "Capture, qualify & route leads automatically", desc: "Capture leads from website, Facebook, Instagram, or Google Ads. Instantly add to CRM, tag by industry, assign follow-up date." },
+      { icon: "🔗", tag: "Enterprise Grade", title: "CRM & Pipeline", what: "Your leads always move forward", desc: "When a lead fills a form, instantly added to CRM, tagged by source, and a follow-up task created automatically." },
+      { icon: "📲", tag: "Viral Growth", title: "DM Automation", what: "Comment keyword → get DM instantly", desc: "User comments 'WEBSITE' on your post — system sends personalised DM with booking link. Every post becomes a lead machine." },
+      { icon: "⭐", tag: "SEO Booster", title: "Review Generation", what: "More 5-star reviews on autopilot", desc: "24hrs after a visit, WhatsApp goes out asking for Google review. 4–5 stars → linked directly to your Maps page." },
+      { icon: "🤖", tag: "24/7 Active", title: "AI Chatbots", what: "Your 24/7 salesperson & support agent", desc: "Smart AI on your website or WhatsApp — answers FAQs, books appointments, captures leads, even at 3am." },
+    ];
+    const clients = [["🏥","Doctors & Clinics"],["⚙️","Engineers"],["🏭","Manufacturing"],["🏪","Retailers"],["🎓","Coaching & Edu"],["🍽️","Restaurants"],["🏗️","Real Estate"],["💼","Startups"],["⚖️","Legal & CA"],["💇","Salons & Wellness"],["🌿","Agriculture"],["🌍","Global Clients"]];
+    const testimonials = [
+      { feat: true, stars: 5, text: "Vybe.tech built our clinic website in 4 days. Patients book online, WhatsApp reminders go out automatically, and our walk-ins have gone up noticeably since launch.", name: "Dr. Radhika Sharma", role: "Dermatologist, Rohini Delhi", bg: "#5b2d8e" },
+      { stars: 5, text: "The SEO articles Aditya wrote are ranking page 1 within two months. Research quality and writing style is genuinely impressive — not the typical AI-generated fluff.", name: "Manish Kumar", role: "Director, MK Engineering Solutions", bg: "#1a5e32" },
+      { stars: 5, text: "The missed-call text back system alone recovered 11 leads in the first week. Our clinic was losing money every time a call went unanswered. That's fixed now.", name: "Suresh Patel", role: "Owner, Patel Industries Pvt Ltd", bg: "#7a3a00" },
+      { stars: 5, text: "The Instagram DM automation is a game-changer. We ran one reel and 140 leads came in automatically overnight. Aditya set it up in one afternoon.", name: "Priya Verma", role: "Founder, Achievers Coaching Centre", bg: "#1a3a6b" },
+      { stars: 5, text: "Review automation took us from 18 Google reviews to 94 in two months. Our local search ranking jumped to top 3. Bookings increased 40%.", name: "Neha Singh", role: "Practice Manager, Wellness Clinic", bg: "#1a5e3e" },
+      { stars: 4, text: "Our restaurant now has a website, online reservations, WhatsApp confirmations, and shows on Google Maps. Zero online presence to fully discoverable.", name: "Amit Kapoor", role: "Owner, Spice Garden Restaurant", bg: "#5e1a1a" },
+    ];
+
+    return (
+      <div>
+        {/* HERO */}
+        <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", background: css.bg, overflow: "hidden" }}>
+          <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(rgba(124,92,252,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,92,252,.05) 1px, transparent 1px)`, backgroundSize: "60px 60px", maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 60% at 70% 50%, rgba(124,92,252,0.08), transparent)" }} />
+          <div style={{ position: "relative", zIndex: 2, padding: "0 60px", maxWidth: 800 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 11, fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase", color: css.vybe2, background: "rgba(124,92,252,.1)", border: "1px solid rgba(124,92,252,.25)", padding: "6px 16px", borderRadius: 100, marginBottom: 28 }}>
+              <span style={{ width: 5, height: 5, background: css.vybe, borderRadius: "50%", animation: "pulse 2s infinite" }} />
+              Pan India & Global · Est. 2023
+            </div>
+            <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2.8rem, 5.5vw, 5rem)", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-.03em", marginBottom: 24, color: css.text }}>
+              We build your<br /><span style={{ background: `linear-gradient(90deg, ${css.vybe2}, ${css.cyan})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>digital ecosystem.</span><br />You run your business.
+            </h1>
+            <p style={{ fontSize: 16, lineHeight: 1.8, color: css.muted, maxWidth: 520, marginBottom: 36, fontWeight: 300 }}>High-converting 3D websites, SEO content, and zero-touch automation for clinics, engineers, manufacturers, and modern brands.</p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ background: css.vybe, color: "#fff", padding: "14px 28px", borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: 8, boxShadow: `0 0 30px rgba(124,92,252,.35)` }}>💬 Book a Discovery Call</a>
+              <span onClick={() => navigate("services")} style={{ background: "transparent", color: css.text, padding: "14px 28px", borderRadius: 100, fontSize: 15, fontWeight: 500, cursor: "pointer", border: `1px solid ${css.border}`, display: "flex", alignItems: "center", gap: 8 }}>Explore Services ↓</span>
+            </div>
+          </div>
+          <div style={{ position: "absolute", bottom: "2rem", right: "5rem", display: "flex", gap: "2.5rem" }}>
+            {[["50+","Projects"],["4.9★","Avg Rating"],["Global","Reach"]].map(([n,l]) => (
+              <div key={l}>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.9rem", fontWeight: 800, background: `linear-gradient(90deg, ${css.vybe2}, ${css.cyan})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 }}>{n}</div>
+                <div style={{ fontSize: ".7rem", color: "rgba(240,238,232,.3)", letterSpacing: ".08em", textTransform: "uppercase", marginTop: 4 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* MARQUEE */}
+        <div style={{ padding: "14px 0", background: css.bg2, overflow: "hidden", borderTop: `1px solid ${css.border}`, borderBottom: `1px solid ${css.border}` }}>
+          <div style={{ display: "flex", gap: "3rem", animation: "marquee 25s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+            {["3D Web Design","SEO Content Writing","WhatsApp Automation","Lead Generation","AI Chatbots","CRM Automation","Missed-Call TextBack","Review Generation","DM Automation","3D Web Design","SEO Content Writing","WhatsApp Automation","Lead Generation","AI Chatbots","CRM Automation","Missed-Call TextBack","Review Generation"].map((t, i) => (
+              <span key={i} style={{ fontSize: ".72rem", fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(240,238,232,.25)", display: "flex", alignItems: "center", gap: "1rem", flexShrink: 0 }}>
+                <span style={{ width: 4, height: 4, background: css.vybe, borderRadius: "50%", flexShrink: 0 }} />{t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* SERVICES OVERVIEW */}
+        <section style={{ padding: "80px 60px", background: css.bg }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>What We Do</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", lineHeight: 1.1, marginBottom: 12, color: css.text }}>Three Pillars of Digital Growth</h2>
+          <p style={{ fontSize: ".95rem", color: css.muted, lineHeight: 1.75, maxWidth: 540, marginBottom: "3.5rem", fontWeight: 300 }}>Everything you need to dominate online — done right, delivered fast, priced fairly.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: css.border, borderRadius: 20, overflow: "hidden" }}>
+            {services.map((s, i) => (
+              <ServiceCard key={i} s={s} onWritingClick={() => navigate("writing")} />
+            ))}
+          </div>
+        </section>
+
+        {/* AUTOMATION */}
+        <section style={{ padding: "80px 60px", background: css.bg2 }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Automation Services</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", lineHeight: 1.1, marginBottom: 12, color: css.text }}>Zero-Touch Systems<br />That Work While You Sleep</h2>
+          <p style={{ fontSize: ".95rem", color: css.muted, lineHeight: 1.75, maxWidth: 560, marginBottom: "3.5rem", fontWeight: 300 }}>Stop doing repetitive tasks manually. These automations save our clients 10–20 hours every week.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem" }}>
+            {automations.map((a, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${css.border}`, borderRadius: 14, padding: "1.8rem", transition: "all .3s", cursor: "default" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(124,92,252,.3)"; e.currentTarget.style.background = "rgba(255,255,255,.06)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = css.border; e.currentTarget.style.background = "rgba(255,255,255,.03)"; e.currentTarget.style.transform = "none"; }}>
+                <div style={{ fontSize: "1.6rem", marginBottom: "1rem" }}>{a.icon}</div>
+                <div style={{ fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: css.vybe2, marginBottom: ".6rem" }}>{a.what}</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: ".95rem", fontWeight: 700, color: css.text, marginBottom: ".5rem" }}>{a.title}</div>
+                <div style={{ fontSize: ".82rem", color: css.muted, lineHeight: 1.65, fontWeight: 300, marginBottom: ".9rem" }}>{a.desc}</div>
+                <span style={{ display: "inline-block", fontSize: ".65rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", background: "rgba(34,211,238,.08)", color: css.cyan, border: "1px solid rgba(34,211,238,.15)", padding: ".22rem .7rem", borderRadius: 100 }}>{a.tag}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CLIENTS */}
+        <section style={{ padding: "80px 60px", background: css.bg }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Industries Served</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", marginBottom: 12, color: css.text }}>Built for Every Business</h2>
+          <p style={{ fontSize: ".95rem", color: css.muted, lineHeight: 1.75, maxWidth: 500, marginBottom: "2.5rem", fontWeight: 300 }}>From neighbourhood clinics to global manufacturers.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "1rem" }}>
+            {clients.map(([e, n], i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${css.border}`, borderRadius: 12, padding: "1rem 1.2rem", display: "flex", alignItems: "center", gap: 10, transition: "all .25s", cursor: "default" }}
+                onMouseEnter={el => { el.currentTarget.style.borderColor = "rgba(124,92,252,.3)"; el.currentTarget.style.background = "rgba(255,255,255,.06)"; }}
+                onMouseLeave={el => { el.currentTarget.style.borderColor = css.border; el.currentTarget.style.background = "rgba(255,255,255,.03)"; }}>
+                <span style={{ fontSize: "1.3rem" }}>{e}</span>
+                <span style={{ fontSize: ".82rem", fontWeight: 400, color: css.muted }}>{n}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PORTFOLIO PREVIEW */}
+        <section style={{ padding: "80px 60px", background: css.bg2 }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Portfolio</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", marginBottom: 12, color: css.text }}>Recent Work</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginTop: "2rem" }}>
+            <PortfolioCard gradient="linear-gradient(135deg,#1a0a3a,#3a1a7a)" label="Website · Clinic" icon="🏥" tag="Website · Dermatology" title="Skin Clinic — Full Digital Setup" desc="Complete website with online booking, WhatsApp integration, Google Maps — live in 5 days." cta={<button onClick={() => setShowClinicDemo(true)} style={{ display: "flex", alignItems: "center", gap: 6, marginTop: "1rem", fontSize: ".8rem", fontWeight: 600, color: css.vybe2, background: "none", border: "none", cursor: "pointer", padding: 0 }}>View Live Demo →</button>} />
+            <PortfolioCard gradient="linear-gradient(135deg,#0a2a1a,#1a5e3a)" label="SEO Content · Medium" icon="✍️" tag="Content · Geopolitics & AI" title="SEO Articles Ranking on Google" desc="Long-form articles on AI, geopolitics, and technology — ranking page 1 and growing a Medium readership." cta={<span onClick={() => navigate("writing")} style={{ display: "flex", alignItems: "center", gap: 6, marginTop: "1rem", fontSize: ".8rem", fontWeight: 600, color: css.vybe2, cursor: "pointer" }}>Read Writing Specimens →</span>} />
+            <PortfolioCard gradient="linear-gradient(135deg,#1a0a2a,#5a1060)" label="Automation · WhatsApp" icon="⚡" tag="Automation · Manufacturing" title="WhatsApp Lead & Reminder System" desc="Automated WhatsApp system — response time went from 24 hours to under 5 minutes. Zero manual effort." />
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section style={{ padding: "80px 60px", background: css.bg }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Client Reviews</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", marginBottom: 32, color: css.text }}>What Clients Say</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "3rem", marginBottom: "2.5rem", background: "rgba(255,255,255,.03)", border: `1px solid ${css.border}`, borderRadius: 20, padding: "2rem 2.5rem", flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "3.5rem", fontWeight: 800, background: `linear-gradient(90deg, ${css.vybe2}, ${css.cyan})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1 }}>4.9</div>
+              <div style={{ color: "#f0c040", margin: ".3rem 0", fontSize: ".9rem" }}>★★★★★</div>
+              <div style={{ fontSize: ".75rem", color: "rgba(240,238,232,.3)" }}>Based on 30+ reviews</div>
+            </div>
+            <div style={{ flex: 1, minWidth: 180 }}>
+              {[[5, "90%"], [4, "8%"], [3, "2%"], [2, "0%"], [1, "0%"]].map(([s, w]) => (
+                <div key={s} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 7 }}>
+                  <span style={{ fontSize: ".7rem", color: "rgba(240,238,232,.3)", width: 28, textAlign: "right" }}>{s}★</span>
+                  <div style={{ flex: 1, height: 5, background: "rgba(255,255,255,.07)", borderRadius: 100, overflow: "hidden" }}>
+                    <div style={{ width: w, height: "100%", background: `linear-gradient(90deg, ${css.vybe}, ${css.cyan})`, borderRadius: 100 }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem" }}>
+            {testimonials.map((t, i) => (
+              <div key={i} style={{ background: t.feat ? `linear-gradient(135deg, rgba(124,92,252,.15), rgba(34,211,238,.07))` : "rgba(255,255,255,.03)", border: `1px solid ${t.feat ? "rgba(124,92,252,.3)" : css.border}`, borderRadius: 14, padding: "1.8rem", transition: "all .3s" }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "none"; }}>
+                <div style={{ color: "#f0c040", fontSize: ".85rem", letterSpacing: 2, marginBottom: ".8rem" }}>{"★".repeat(t.stars)}</div>
+                <p style={{ fontSize: ".87rem", lineHeight: 1.7, color: css.muted, marginBottom: "1.2rem", fontStyle: "italic", fontWeight: 300 }}>"{t.text}"</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 38, height: 38, borderRadius: "50%", background: t.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne',sans-serif", fontSize: ".78rem", fontWeight: 800, color: "#fff", flexShrink: 0 }}>{t.name.split(" ").map(n => n[0]).join("")}</div>
+                  <div><div style={{ fontWeight: 500, fontSize: ".85rem", color: css.text }}>{t.name}</div><div style={{ fontSize: ".72rem", color: "rgba(240,238,232,.3)" }}>{t.role}</div></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PRICING */}
+        <section style={{ padding: "80px 60px", background: css.bg2 }}>
+          <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Pricing</div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.8rem,3.5vw,3rem)", fontWeight: 800, letterSpacing: "-.025em", marginBottom: 12, color: css.text }}>Transparent Pricing.<br />No Surprises.</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginTop: "2.5rem" }}>
+            {[
+              { badge: "Starter", name: "Starter Pack", amount: "₹10,000", per: "one-time setup", pop: false, feats: ["Up to 3 pages","Mobile responsive design","Basic SEO setup","1 month free support"] },
+              { badge: "Most Popular", name: "Growth Pack", amount: "₹24,000", per: "setup + 3 months support", pop: true, feats: ["Everything in Starter","Up to 8 pages","2 SEO Blog articles","Business automation help","3 months priority support"] },
+              { badge: "Automation", name: "Automate Pack", amount: "Custom", per: "tailored to your workflows", pop: false, feats: ["WhatsApp automation","Lead generation funnel","AI chatbot setup","CRM & review automation","Ongoing maintenance"] },
+            ].map((p, i) => (
+              <div key={i} style={{ background: p.pop ? `linear-gradient(145deg, rgba(124,92,252,.2), rgba(34,211,238,.08))` : "rgba(255,255,255,.03)", border: `1px solid ${p.pop ? "rgba(124,92,252,.4)" : css.border}`, borderRadius: 20, padding: "2.5rem", transform: p.pop ? "scale(1.03)" : "none", transition: "all .3s" }}
+                onMouseEnter={e => { if (!p.pop) { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.borderColor = "rgba(124,92,252,.3)"; } }}
+                onMouseLeave={e => { if (!p.pop) { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = css.border; } }}>
+                <div style={{ fontSize: ".65rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: p.pop ? css.cyan : css.vybe2, background: p.pop ? "rgba(34,211,238,.08)" : "rgba(124,92,252,.12)", border: `1px solid ${p.pop ? "rgba(34,211,238,.2)" : "rgba(124,92,252,.2)"}`, padding: ".28rem .8rem", borderRadius: 100, display: "inline-block", marginBottom: "1.2rem" }}>{p.badge}</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.15rem", fontWeight: 800, color: css.text, marginBottom: ".8rem" }}>{p.name}</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: "2.4rem", fontWeight: 800, lineHeight: 1, margin: ".8rem 0 .2rem", background: p.pop ? `linear-gradient(90deg, ${css.vybe2}, ${css.cyan})` : "none", WebkitBackgroundClip: p.pop ? "text" : "unset", WebkitTextFillColor: p.pop ? "transparent" : css.text }}>{p.amount}</div>
+                <div style={{ fontSize: ".78rem", color: "rgba(240,238,232,.3)" }}>{p.per}</div>
+                <ul style={{ listStyle: "none", margin: "1.5rem 0 1.8rem", padding: 0 }}>
+                  {p.feats.map((f, j) => <li key={j} style={{ fontSize: ".8rem", color: css.muted, padding: ".35rem 0", display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: css.vybe2, fontWeight: 700, flexShrink: 0 }}>✓</span>{f}</li>)}
+                </ul>
+                <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ display: "block", textAlign: "center", padding: ".8rem", borderRadius: 100, fontSize: ".85rem", fontWeight: 500, textDecoration: "none", background: p.pop ? css.vybe : "rgba(255,255,255,.07)", color: "#fff", border: p.pop ? "none" : `1px solid ${css.border}`, transition: "all .25s" }}>Get Started</a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section style={{ padding: "80px 60px", background: css.bg2, textAlign: "center", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 600, background: "radial-gradient(ellipse, rgba(124,92,252,.1), transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ position: "relative" }}>
+            <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 12 }}>Ready?</div>
+            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2rem,4.5vw,3.5rem)", fontWeight: 800, letterSpacing: "-.025em", marginBottom: "1.2rem", color: css.text }}>Let's Build Something<br />Extraordinary Together.</h2>
+            <p style={{ fontSize: ".98rem", color: css.muted, marginBottom: "2.5rem", lineHeight: 1.7, fontWeight: 300 }}>Whether you're in Delhi, Mumbai, or London — one message is all it takes. Zero jargon. Zero pressure. Just results.</p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ background: "#25d366", color: "#fff", padding: ".9rem 2rem", borderRadius: 100, fontSize: ".9rem", fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: 9, boxShadow: "0 0 24px rgba(37,211,102,.25)" }}>💬 WhatsApp: +91 85100 84896</a>
+              <a href="https://medium.com/@reachtowordknight" target="_blank" rel="noreferrer" style={{ background: "transparent", color: css.text, padding: ".9rem 2rem", borderRadius: 100, fontSize: ".9rem", fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: 9, border: `1px solid ${css.border}` }}>📝 Read My Work on Medium</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  };
+
+  // ── SERVICES PAGE ─────────────────────────────────────────────────────────────
+  const ServicesPage = () => (
+    <div style={{ padding: "80px 60px", background: css.bg, minHeight: "60vh" }}>
+      <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Services</div>
+      <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2.2rem,4vw,4rem)", fontWeight: 800, letterSpacing: "-.03em", color: css.text, marginBottom: 12 }}>What We Do</h1>
+      <p style={{ fontSize: 16, color: css.muted, maxWidth: 540, lineHeight: 1.75, fontWeight: 300, marginBottom: 60 }}>Three specialised services. One goal — sustainable digital growth for your business.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: css.border, borderRadius: 20, overflow: "hidden" }}>
+        {[
+          { num: "01", icon: "🌐", title: "Immersive Web Design", desc: "High-speed, 3D, interactive websites for any industry. Not a template. Never generic.", items: ["3D & interactive animations","Mobile-first performance","WhatsApp & booking integrations","Google Maps & local SEO","Appointment / inquiry forms","Ongoing maintenance plans"], price: "Starts ₹10,000" },
+          { num: "02", icon: "✍️", title: "SEO Content & Copywriting", desc: "Research-backed, SEO-optimised articles and web copy — geopolitics, AI, health, business.", items: ["Long-form SEO articles","Web copy & landing pages","Medium publication strategy","Keyword cluster architecture","Internal linking strategy","Analytics & performance tracking"], price: "From ₹1,500/article" },
+          { num: "03", icon: "⚡", title: "Business Automation", desc: "n8n-powered automation connecting your business systems — leads, onboarding, reviews, reminders.", items: ["WhatsApp appointment reminders","Lead generation & CRM pipelines","AI chatbots on web & WhatsApp","Missed-call text back system","Automated client onboarding","Google review generation"], price: "Custom Quote" },
+        ].map((s, i) => <ServiceCard key={i} s={s} onWritingClick={() => navigate("writing")} fullView />)}
+      </div>
+    </div>
+  );
+
+  // ── WRITING PAGE ──────────────────────────────────────────────────────────────
+  const WritingPage = () => (
+    <div style={{ background: css.bg, minHeight: "80vh" }}>
+      <div style={{ padding: "80px 60px 40px" }}>
+        <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Writing Portfolio</div>
+        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2.2rem,4vw,4rem)", fontWeight: 800, letterSpacing: "-.03em", color: css.text, marginBottom: 12 }}>Writing Specimens</h1>
+        <p style={{ fontSize: 16, color: css.muted, maxWidth: 600, lineHeight: 1.75, fontWeight: 300 }}>Three samples across different lengths and topics — demonstrating research depth, SEO strategy, and voice. No AI fluff. Every word is earned.</p>
+        <a href="https://medium.com/@reachtowordknight" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 20, fontSize: ".9rem", fontWeight: 500, color: css.vybe2, textDecoration: "none" }}>Read full portfolio on Medium →</a>
+      </div>
+
+      {/* Specimen Selector */}
+      <div style={{ padding: "0 60px", display: "flex", gap: "1rem", borderBottom: `1px solid ${css.border}` }}>
+        {specimens.map((s, i) => (
+          <button key={i} onClick={() => setActiveSpecimen(i)} style={{ padding: "1rem 1.5rem", background: "none", border: "none", cursor: "pointer", fontSize: ".85rem", fontWeight: 600, color: activeSpecimen === i ? css.vybe2 : css.muted, borderBottom: activeSpecimen === i ? `2px solid ${css.vybe2}` : "2px solid transparent", transition: "all .2s", letterSpacing: ".04em" }}>
+            {s.label} · {s.tag}
+          </button>
+        ))}
+      </div>
+
+      {/* Active Specimen */}
+      <div style={{ padding: "50px 60px" }}>
+        <div style={{ maxWidth: 820 }}>
+          <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
+            <span style={{ fontSize: ".68rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", background: "rgba(124,92,252,.1)", border: "1px solid rgba(124,92,252,.2)", color: css.vybe2, padding: ".3rem .9rem", borderRadius: 100 }}>{specimens[activeSpecimen].tag}</span>
+            <span style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".08em", color: css.muted, padding: ".3rem .9rem", background: "rgba(255,255,255,.04)", border: `1px solid ${css.border}`, borderRadius: 100 }}>{specimens[activeSpecimen].wordCount}</span>
+            <span style={{ fontSize: ".68rem", fontWeight: 600, color: css.muted, padding: ".3rem .9rem", background: "rgba(255,255,255,.04)", border: `1px solid ${css.border}`, borderRadius: 100 }}>🕐 {specimens[activeSpecimen].readTime}</span>
+          </div>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(1.5rem,3vw,2.4rem)", fontWeight: 800, color: css.text, lineHeight: 1.2, letterSpacing: "-.02em", marginBottom: 32 }}>{specimens[activeSpecimen].title}</h2>
+
+          {/* Collapsed preview vs expanded */}
+          {openSpec === activeSpecimen ? (
+            <div>
+              <div style={{ fontSize: "1rem", lineHeight: 1.85, color: css.muted, fontWeight: 300, whiteSpace: "pre-wrap", background: "rgba(255,255,255,.02)", border: `1px solid ${css.border}`, borderRadius: 12, padding: "2.5rem" }}>
+                {specimens[activeSpecimen].body}
+              </div>
+              <button onClick={() => setOpenSpec(null)} style={{ marginTop: 20, fontSize: ".85rem", fontWeight: 600, color: css.muted, background: "none", border: `1px solid ${css.border}`, padding: "10px 24px", borderRadius: 100, cursor: "pointer" }}>Collapse ↑</button>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: "1rem", lineHeight: 1.85, color: css.muted, fontWeight: 300, background: "rgba(255,255,255,.02)", border: `1px solid ${css.border}`, borderRadius: 12, padding: "2.5rem", position: "relative", maxHeight: 280, overflow: "hidden" }}>
+                <div style={{ whiteSpace: "pre-wrap" }}>{specimens[activeSpecimen].body.substring(0, 600)}...</div>
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 100, background: `linear-gradient(to bottom, transparent, ${css.bg})` }} />
+              </div>
+              <button onClick={() => setOpenSpec(activeSpecimen)} style={{ marginTop: 20, fontSize: ".85rem", fontWeight: 600, color: "#fff", background: css.vybe, border: "none", padding: "12px 28px", borderRadius: 100, cursor: "pointer", boxShadow: `0 0 20px rgba(124,92,252,.3)` }}>Read Full Specimen →</button>
+            </div>
+          )}
+        </div>
+
+        {/* Other specimens preview */}
+        <div style={{ marginTop: 60, borderTop: `1px solid ${css.border}`, paddingTop: 48 }}>
+          <div style={{ fontSize: ".75rem", fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase", color: css.muted, marginBottom: 20 }}>Other Specimens</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1.2rem" }}>
+            {specimens.filter((_, i) => i !== activeSpecimen).map((s, i) => (
+              <div key={i} onClick={() => { setActiveSpecimen(specimens.indexOf(s)); setOpenSpec(null); }} style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${css.border}`, borderRadius: 14, padding: "1.5rem", cursor: "pointer", transition: "all .2s" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(124,92,252,.3)"; e.currentTarget.style.background = "rgba(255,255,255,.06)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = css.border; e.currentTarget.style.background = "rgba(255,255,255,.03)"; }}>
+                <div style={{ fontSize: ".65rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: css.vybe2, marginBottom: 8 }}>{s.tag} · {s.wordCount}</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: ".95rem", color: css.text, lineHeight: 1.3, marginBottom: 8 }}>{s.title}</div>
+                <div style={{ fontSize: ".78rem", color: css.muted }}>Click to read →</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── PORTFOLIO PAGE ────────────────────────────────────────────────────────────
+  const PortfolioPage = () => (
+    <div style={{ padding: "80px 60px", background: css.bg, minHeight: "60vh" }}>
+      <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Portfolio</div>
+      <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2.2rem,4vw,4rem)", fontWeight: 800, letterSpacing: "-.03em", color: css.text, marginBottom: 12 }}>Our Work</h1>
+      <p style={{ fontSize: 16, color: css.muted, maxWidth: 540, lineHeight: 1.75, fontWeight: 300, marginBottom: 50 }}>Websites that convert, content that ranks, automations that save hours every week.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+        <PortfolioCard gradient="linear-gradient(135deg,#1a0a3a,#3a1a7a)" label="Website · Clinic" icon="🏥" tag="Website · Dermatology" title="Smile Dental Clinic" desc="Complete dental clinic website — booking, WhatsApp integration, Google Maps, testimonials. Fully responsive." cta={<button onClick={() => setShowClinicDemo(true)} style={{ display: "flex", alignItems: "center", gap: 6, marginTop: "1rem", fontSize: ".8rem", fontWeight: 600, color: css.vybe2, background: "none", border: "none", cursor: "pointer", padding: 0 }}>View Live Demo →</button>} />
+        <PortfolioCard gradient="linear-gradient(135deg,#0a2a1a,#1a5e3a)" label="Content · SEO" icon="✍️" tag="Content · Geopolitics & AI" title="Writing Portfolio" desc="Long-form SEO articles on AI, geopolitics, and technology — ranking page 1 on Google." cta={<span onClick={() => navigate("writing")} style={{ display: "flex", alignItems: "center", gap: 6, marginTop: "1rem", fontSize: ".8rem", fontWeight: 600, color: css.vybe2, cursor: "pointer" }}>Read Specimens →</span>} />
+        <PortfolioCard gradient="linear-gradient(135deg,#1a0a2a,#5a1060)" label="Automation" icon="⚡" tag="Automation · Manufacturing" title="WhatsApp Lead System" desc="Zero-manual WhatsApp automation — response time from 24h to under 5 minutes for a Delhi manufacturer." />
+        <PortfolioCard gradient="linear-gradient(135deg,#0a1a2a,#1a4060)" label="Website · Retail" icon="🏪" tag="Website · Retail Shop" title="Pharmacy Digital Setup" desc="Full website + Google Maps + WhatsApp automation for a neighbourhood pharmacy in Rohini." />
+        <PortfolioCard gradient="linear-gradient(135deg,#1a1a0a,#3a3a10)" label="Automation · Coaching" icon="🎓" tag="Automation · Education" title="Instagram DM Lead System" desc="Comment 'COURSE' → 140 leads came in overnight. Instagram DM automation for a coaching centre." />
+        <PortfolioCard gradient="linear-gradient(135deg,#0a1a1a,#0a3a3a)" label="Reviews · Clinic" icon="⭐" tag="SEO · Local Search" title="Google Review Engine" desc="18 → 94 Google reviews in 2 months. Automated WhatsApp review generation. Top 3 local ranking." />
+      </div>
+    </div>
+  );
+
+  // ── CONTACT PAGE ──────────────────────────────────────────────────────────────
+  const ContactPage = () => {
+    const [sent, setSent] = useState(false);
+    return (
+      <div style={{ padding: "80px 60px", background: css.bg, minHeight: "80vh" }}>
+        <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: css.vybe2, marginBottom: 10 }}>Get In Touch</div>
+        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2.2rem,4vw,4rem)", fontWeight: 800, letterSpacing: "-.03em", color: css.text, marginBottom: 12 }}>Let's Work Together</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 60, marginTop: 50 }}>
+          <div>
+            {[["👤","Contact","Aditya · Founder & Builder"],["📞","WhatsApp / Phone","+91 85100 84896"],["📧","Email","aditya@vybe.tech"],["🌍","Clients","Pan India & Global"],["🕐","Response Time","Usually within 2 hours"]].map(([icon, label, val]) => (
+              <div key={label} style={{ display: "flex", gap: 16, marginBottom: 24, paddingBottom: 24, borderBottom: `1px solid ${css.border}` }}>
+                <div style={{ width: 48, height: 48, background: "rgba(124,92,252,.1)", border: "1px solid rgba(124,92,252,.2)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0 }}>{icon}</div>
+                <div>
+                  <div style={{ fontSize: ".7rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: css.vybe2, marginBottom: 4 }}>{label}</div>
+                  <div style={{ fontSize: 16, color: css.text, fontWeight: 400 }}>{val}</div>
+                </div>
+              </div>
+            ))}
+            <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: 10, background: "#25d366", color: "#fff", padding: "14px 28px", borderRadius: 100, fontWeight: 600, fontSize: 15, textDecoration: "none", marginTop: 10, boxShadow: "0 8px 24px rgba(37,211,102,.3)" }}>💬 Chat on WhatsApp Now</a>
+          </div>
+          <div>
+            <div style={{ fontSize: ".7rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: css.vybe2, marginBottom: 8 }}>Send A Message</div>
+            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.8rem", fontWeight: 800, color: css.text, marginBottom: 28 }}>Get a Free <span style={{ background: `linear-gradient(90deg, ${css.vybe2}, ${css.cyan})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Consultation</span></h2>
+            {sent ? (
+              <div style={{ background: "rgba(74,222,128,.08)", border: "1px solid rgba(74,222,128,.2)", borderRadius: 14, padding: "2rem", textAlign: "center" }}>
+                <div style={{ fontSize: 40, marginBottom: 12 }}>✅</div>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "1.2rem", color: "#4ade80", marginBottom: 8 }}>Message Sent!</div>
+                <p style={{ color: css.muted, fontSize: ".9rem" }}>Aditya will get back to you within 2 hours on WhatsApp.</p>
+              </div>
+            ) : (
+              <form onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                  <FormField label="Your Name" placeholder="Rahul Sharma" />
+                  <FormField label="Phone Number" placeholder="+91 98765 43210" />
+                </div>
+                <FormField label="Email" placeholder="rahul@example.com" style={{ marginBottom: 16 }} />
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: "block", fontSize: ".7rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(240,238,232,.4)", marginBottom: 8 }}>Service Needed</label>
+                  <select style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${css.border}`, color: css.text, padding: "12px 16px", borderRadius: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 15, outline: "none" }}>
+                    <option value="">Select a service...</option>
+                    <option>Website Design & Development</option>
+                    <option>SEO Content Writing</option>
+                    <option>Business Automation</option>
+                    <option>Full Digital Package</option>
+                  </select>
+                </div>
+                <FormField label="Your Message" placeholder="Tell us about your business and what you need..." textarea style={{ marginBottom: 20 }} />
+                <button type="submit" style={{ width: "100%", background: css.vybe, color: "#fff", padding: "16px", borderRadius: 100, fontSize: 16, fontWeight: 600, border: "none", cursor: "pointer", boxShadow: `0 0 30px rgba(124,92,252,.35)` }}>Send Message →</button>
+                <p style={{ fontSize: ".75rem", color: "rgba(240,238,232,.3)", textAlign: "center", marginTop: 12 }}>We respond within 2 hours during working hours.</p>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────────
+  const FormField = ({ label, placeholder, textarea, style: s }) => (
+    <div style={s}>
+      <label style={{ display: "block", fontSize: ".7rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(240,238,232,.4)", marginBottom: 8 }}>{label}</label>
+      {textarea ? (
+        <textarea placeholder={placeholder} rows={5} style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${css.border}`, color: css.text, padding: "12px 16px", borderRadius: 8, fontFamily: "sans-serif", fontSize: 15, outline: "none", resize: "vertical" }} />
+      ) : (
+        <input placeholder={placeholder} style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${css.border}`, color: css.text, padding: "12px 16px", borderRadius: 8, fontFamily: "sans-serif", fontSize: 15, outline: "none" }} />
+      )}
+    </div>
+  );
+
+  const ServiceCard = ({ s }) => (
+    <div style={{ background: css.bg2, padding: "3rem 2.5rem", position: "relative", overflow: "hidden", transition: "background .3s", cursor: "default" }}
+      onMouseEnter={e => { e.currentTarget.style.background = css.bg3; }}
+      onMouseLeave={e => { e.currentTarget.style.background = css.bg2; }}>
+      <div style={{ fontSize: ".65rem", fontWeight: 600, letterSpacing: ".15em", textTransform: "uppercase", color: "rgba(240,238,232,.25)", marginBottom: "1.5rem" }}>{s.num} · {s.title}</div>
+      <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(124,92,252,.12)", border: "1px solid rgba(124,92,252,.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", marginBottom: "1.8rem" }}>{s.icon}</div>
+      <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.3rem", fontWeight: 700, marginBottom: ".9rem", color: css.text }}>{s.title}</h3>
+      <p style={{ fontSize: ".87rem", color: css.muted, lineHeight: 1.7, marginBottom: "1.5rem", fontWeight: 300 }}>{s.desc}</p>
+      <ul style={{ listStyle: "none", padding: 0, marginBottom: "2rem" }}>
+        {s.items.map((item, i) => (
+          <li key={i} style={{ fontSize: ".8rem", color: css.muted, padding: ".32rem 0", borderBottom: `1px solid ${css.border}`, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: css.vybe2, flexShrink: 0 }}>→</span>{item}
+          </li>
+        ))}
+      </ul>
+      <span style={{ fontSize: ".75rem", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: css.vybe2, background: "rgba(124,92,252,.1)", border: "1px solid rgba(124,92,252,.2)", padding: ".3rem .9rem", borderRadius: 100, display: "inline-block" }}>{s.price}</span>
+    </div>
+  );
+
+  const PortfolioCard = ({ gradient, label, icon, tag, title, desc, cta }) => (
+    <div style={{ border: `1px solid ${css.border}`, borderRadius: 20, overflow: "hidden", transition: "all .3s", background: css.bg3, cursor: "default" }}
+      onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.borderColor = "rgba(124,92,252,.3)"; e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,.4)"; }}
+      onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.borderColor = css.border; e.currentTarget.style.boxShadow = "none"; }}>
+      <div style={{ height: 180, background: gradient, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3rem", position: "relative", overflow: "hidden" }}>
+        <span>{icon}</span>
+        <span style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "rgba(0,0,0,.5)", color: "rgba(255,255,255,.7)", fontSize: ".65rem", fontWeight: 600, letterSpacing: ".1em", textTransform: "uppercase", padding: ".4rem 1rem", backdropFilter: "blur(4px)" }}>{label}</span>
+      </div>
+      <div style={{ padding: "1.5rem" }}>
+        <div style={{ fontSize: ".66rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".1em", color: css.vybe2, marginBottom: ".4rem" }}>{tag}</div>
+        <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: ".98rem", fontWeight: 700, marginBottom: ".5rem", color: css.text }}>{title}</h3>
+        <p style={{ fontSize: ".82rem", color: css.muted, lineHeight: 1.65, fontWeight: 300 }}>{desc}</p>
+        {cta}
+      </div>
+    </div>
+  );
+
+  // ── FOOTER ────────────────────────────────────────────────────────────────────
+  const Footer = () => (
+    <footer style={{ background: "#030308", padding: "2rem 60px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", borderTop: "1px solid rgba(255,255,255,.04)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "1rem", color: css.text }}>
+        <div style={{ width: 7, height: 7, borderRadius: "50%", background: css.vybe, boxShadow: `0 0 10px ${css.vybe}` }} />
+        Vybe.tech
+      </div>
+      <div style={{ display: "flex", gap: "2rem" }}>
+        {[["home","Services"],["writing","Writing"],["portfolio","Work"],["contact","Contact"]].map(([p, l]) => (
+          <span key={p} onClick={() => navigate(p)} style={{ fontSize: ".75rem", color: "rgba(240,238,232,.3)", cursor: "pointer", transition: "color .2s" }}
+            onMouseEnter={e => e.currentTarget.style.color = css.text}
+            onMouseLeave={e => e.currentTarget.style.color = "rgba(240,238,232,.3)"}>{l}</span>
+        ))}
+      </div>
+      <div style={{ fontSize: ".72rem", color: "rgba(255,255,255,.12)" }}>© 2025 Vybe.tech · Pan India & Global</div>
+    </footer>
+  );
+
+  return (
+    <div style={{ background: css.bg, color: css.text, fontFamily: "'Outfit', sans-serif", minHeight: "100vh" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { overflow-x: hidden; }
+        @keyframes marquee { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } }
+        @keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: .3 } }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(124,92,252,.4); border-radius: 2px; }
+      `}</style>
+
+      <div ref={topRef} />
+      <Nav />
+
+      {page === "home" && <HomePage />}
+      {page === "services" && <ServicesPage />}
+      {page === "writing" && <WritingPage />}
+      {page === "portfolio" && <PortfolioPage />}
+      {page === "contact" && <ContactPage />}
+
+      <Footer />
+
+      {showClinicDemo && <DentalClinicDemo onClose={() => setShowClinicDemo(false)} />}
+
+      {/* WhatsApp FAB */}
+      <a href="https://wa.me/918510084896" target="_blank" rel="noreferrer" style={{ position: "fixed", bottom: "2rem", right: "2rem", zIndex: 400, background: "#25d366", color: "#fff", width: 54, height: 54, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.4rem", textDecoration: "none", boxShadow: "0 8px 32px rgba(37,211,102,.35)", animation: "pulse 3s ease infinite" }}>💬</a>
+    </div>
+  );
 }
-
-function botReply(key){
-  const typing=document.createElement('div');
-  typing.className='msg bot typing';typing.textContent='Typing…';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
-  setTimeout(()=>{
-    typing.remove();
-    const pool=botReplies[key]||botReplies['default'];
-    addMsg(pool[Math.floor(Math.random()*pool.length)],'bot');
-  },900+Math.random()*600);
-}
-
-function askQ(el){
-  const txt=el.textContent;
-  addMsg(txt,'user');
-  const k=txt.toLowerCase().includes('website')?'website':txt.toLowerCase().includes('seo')||txt.toLowerCase().includes('content')?'seo':txt.toLowerCase().includes('autom')?'automation':txt.toLowerCase().includes('pric')?'pricing':txt.toLowerCase().includes('fast')||txt.toLowerCase().includes('deliver')?'delivery':'default';
-  botReply(k);
-  document.getElementById('chat-qs').style.display='none';
-}
-
-function sendChat(){
-  const inp=document.getElementById('chat-in');
-  const txt=inp.value.trim();if(!txt)return;
-  addMsg(txt,'user');inp.value='';
-  const tl=txt.toLowerCase();
-  const k=tl.includes('web')||tl.includes('site')?'website':tl.includes('seo')||tl.includes('content')||tl.includes('article')||tl.includes('writ')?'seo':tl.includes('autom')||tl.includes('whatsapp')||tl.includes('chatbot')||tl.includes('crm')||tl.includes('lead')?'automation':tl.includes('price')||tl.includes('cost')||tl.includes('rupee')||tl.includes('₹')||tl.includes('how much')?'pricing':tl.includes('fast')||tl.includes('long')||tl.includes('deliver')||tl.includes('days')?'delivery':'default';
-  botReply(k);
-  document.getElementById('chat-qs').style.display='none';
-}
-
-// Init bot greeting
-setTimeout(()=>{
-  addMsg("Hi there! 👋 I'm the Vybe.tech AI assistant. Tell me what kind of digital help you're looking for — website, content, or automation?","bot");
-},600);
-</script>
-</body>
-</html>
